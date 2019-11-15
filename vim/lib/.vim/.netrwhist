@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/jared'
-let g:netrw_dirhist_2='/home/jared/.vim'
-let g:netrw_dirhist_3='/home/jared/.vim/colors'
-let g:netrw_dirhist_4='/home/jared'
-let g:netrw_dirhist_5='/home/jared/Projects/Personal/dotfiles/vim'
