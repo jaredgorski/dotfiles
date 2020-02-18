@@ -1,58 +1,30 @@
-" ------------------------------
-" Jared's Vim                  |
-" ++++++++++++++++++++++++++++++
-
-
-" general
-set showcmd
-set lazyredraw
-set showmatch
-set novisualbell
-set nofixendofline
-set nobackup
-
-" syntax
-syntax enable
-colorscheme spacecamp
-
-" files
-filetype indent on
-
-" number
+syntax on
 set number
 set relativenumber
-
-" tab and indentation
-set ai
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set visualbell t_vb=
+set novisualbell
+set nofixendofline
 set tabstop=2
 set softtabstop=2 expandtab
 set shiftwidth=2 smarttab
 set scrolloff=1
-
-" hl & inc search
-set incsearch
-set hlsearch
-set ignorecase
-set smartcase
-nnoremap noh :nohlsearch<CR>
-
-" folding
-set foldenable
-set foldlevelstart=99
-set foldnestmax=10
-set foldmethod=indent
-
-" netrw
+set ai
+set nobackup
+set showcmd
+filetype plugin indent on
 let g:netrw_liststyle=3
-
-" wildignore
-set wildmenu
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 " disable gui cursor changing
 set guicursor=
 
-" status line
+" map leader to space
+map <Space> <Leader>
+
+" native vim status line config
 set laststatus=2
 set statusline=
 set statusline+=\ 
@@ -70,47 +42,74 @@ set statusline+=\
 set statusline+=%l:%c
 set statusline+=\ 
 
+" ctags search path
+set tags=./.tags,.tags;
 
-" ==============================
-" KEY BINDINGS
-" ==============================
+" gutentags setup
+let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_file_list_command = {
+      \ 'markers': {
+      \ '.git': 'git ls-files',
+      \ },
+      \ }
+let g:gutentags_generate_on_new = 1
 
-" map leader to space
-map <Space> <Leader>
+" toggle tagbar
+nmap <C-t> :TagbarToggle<CR>
 
-" search highlighted word in file with double-slash
+" open ctrlsf search
+nnoremap <C-F> :CtrlSF 
+
+" search highlighted word in file
 vnoremap // y/<C-R>"<CR>
+
+" toggle nerdtree
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" show hidden files in nerdtree
+let NERDTreeShowHidden=1
 
 " update all open buffers if external edits
 map <C-z> :bufdo :e!<CR>
 
-" ctrlsf
-nnoremap <C-F> :CtrlSF
+" fzf fuzzy file search
+map <C-p> :FZF<CR>
 
-" fzf
-map <C-p> :Files<CR>
+" use ack.vim with silver_searcher
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
+" Disable ALE highlighting
+let g:ale_set_highlights = 0
 
-" ==============================
-" PLUG.VIM
-" ==============================
+" wildignore config
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
-call plug#begin()
+" code folding
+set foldmethod=manual
+
+" plugs
+call plug#begin('~/.vim/plugged')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'dyng/ctrlsf.vim'
 Plug 'elzr/vim-json'
 Plug 'jaredgorski/spacecamp'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'aonemd/kuroi.vim'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/goyo.vim'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'pangloss/vim-javascript'
 Plug 'sgur/vim-editorconfig'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-fugitive'
-Plug 'leafgarland/typescript-vim'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'dense-analysis/ale'
+Plug 'w0rp/ale'
+Plug 'xero/sourcerer.vim'
 
 call plug#end()
+
+" colors
+set background=dark
+colorscheme spacecamp
