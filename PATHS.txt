@@ -1,0 +1,6 @@
+bash
+ctags
+emacs
+tmux
+vim
+zsh

@@ -91,20 +91,20 @@ set foldmethod=manual
 " plugs
 call plug#begin('~/.vim/plugged')
 
+Plug '/usr/local/opt/fzf'
 Plug 'airblade/vim-gitgutter'
+Plug 'aonemd/kuroi.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'elzr/vim-json'
 Plug 'jaredgorski/spacecamp'
-Plug 'aonemd/kuroi.vim'
-Plug '/usr/local/opt/fzf'
 Plug 'junegunn/goyo.vim'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'pangloss/vim-javascript'
 Plug 'sgur/vim-editorconfig'
-Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-fugitive'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-sleuth'
 Plug 'w0rp/ale'
 Plug 'xero/sourcerer.vim'
 

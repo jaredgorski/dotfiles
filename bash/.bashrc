@@ -1,7 +1,3 @@
-
-# Adding autocomplete for 'we'
-[ -f ~/.lcp_autocomplete ] && source ~/.lcp_autocomplete
-
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
