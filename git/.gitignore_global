@@ -1,0 +1,35 @@
+# vim temporary files
+*~
+*.swp
+*.swo
+
+# node modules
+node_modules
+
+# ds store
+.DS_Store
+
+# vim ctags
+tags
+tags.lock
+tags.temp
+tags.temp.tmp
+
+# java
+*.class
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# intellij
+*.iml
+.idea/
+*.ipr
+*.iws
+out/
+.idea_modules/
+
+# ctags
+.tags*

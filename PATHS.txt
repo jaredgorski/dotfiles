@@ -1,6 +1,7 @@
 bash
 ctags
 emacs
+git
 tmux
 vim
 zsh
