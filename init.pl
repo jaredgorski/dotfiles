@@ -24,6 +24,7 @@ my $timestamp = localtime(time);
 my $archive_dir = "$home/.dotfiles_archive/$timestamp";
 make_path($archive_dir) or die "Could not create archive directory: $!";
 print " ARCHIVE: $archive_dir\n";
+my $is_archived = 0;
 
 
 # Get dotfiles directory paths from PATHS.txt
@@ -46,6 +47,7 @@ sub link_to_home {
     
     # If destination file exists, archive it
     if (-e $dest && !-l $dest) {
+      $is_archived = 1;
       my $archive_dest = "$archive_dir/$'";
       print "\n\t! File exists in \$HOME directory. Moving to archive \n\t  before linking.";
       move $dest, $archive_dest; 
@@ -68,4 +70,8 @@ if (!defined $ENV{'DOTFILES'}) {
   print "\nTo add \$DOTFILES to a shell config, run:\n\t`echo \"\\nexport DOTFILES=$FindBin::Bin\" >> shells/{{config_filepath}}`\n\n";
 } else {
   print "\n";
+}
+
+if (!$is_archived) {
+  rmdir $archive_dir;
 }
