@@ -8,6 +8,10 @@ export DOTFILES=/Users/jaredgorski/Projects/Personal/dotfiles
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# Load zplugin
+source ~/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+
 zplugin ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh"
 zplugin load trapd00r/LS_COLORS
 
