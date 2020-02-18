@@ -23,13 +23,13 @@ Some dotfiles should be copied rather than symlinked, such as shell profile conf
 _NOTE: "root" directories which need to be copied rather than symlinked should **only** be added to `PATHS_CP.txt`._
 
 ### The main script
-To make symlinks and copy files as configured in the dotfiles directories, `PATHS_LN.txt`, and `PATHS_CP.txt`, run:
+To make symlinks and copy files as configured in the dotfiles directories and `PATHS_LN.txt`/`PATHS_CP.txt`, run:
 
 ```shell
 make dotfiles
 ```
 
-This will recursively link all files and directories in each directory listed in `PATHS_LN.txt`, starting at the first level of nesting (the root directories listed in `PATHS.txt` will not be linked). If a file-to-be-linked already exists in `$HOME`, that file will be moved to the archive directory before the dotfile is linked in its place. The archive directory will contain a directory named by a relevant timestamp and will contain any and all files which were moved there during that runtime.
+This will recursively link all files and directories in each directory listed in `PATHS_LN.txt`, starting at the first level of nesting. If a file-to-be-linked already exists in `$HOME`, that file will be moved to the archive directory before the dotfile is linked in its place. The archive directory will contain a directory named by a relevant timestamp and will contain any and all files which were moved there during that runtime.
 
 The behavior for `PATHS_CP.txt` is the same, except that files are copied rather than symlinked.
 
