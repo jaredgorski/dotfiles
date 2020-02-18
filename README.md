@@ -34,7 +34,7 @@ This will recursively link all files and directories in each directory listed in
 The behavior for `PATHS_CP.txt` is the same, except that files are copied rather than symlinked.
 
 ### The archive directory
-To avoid losing files, every file which exists before symlinking an identically-named file will be moved to the archive directory, found at `$HOME/.dotfiles_archive`. The archive directory contains a directory for each time the dotfiles were made, named by the timestamp of each respective runtime. To view files archived at a given runtime, check inside the relevant directory.
+To avoid losing files, every file which exists before symlinking or copying an identically-named file will be moved to the archive directory, found at `$HOME/.dotfiles_archive`. The archive directory contains a directory for each time the dotfiles were made, named by the timestamp of each respective runtime. To view files archived at a given runtime, check inside the relevant directory. This is useful in case running the dotfiles script would overwrite a file that needs to be preserved for some reason.
 
 To remove the archive folder, run:
 ```shell
