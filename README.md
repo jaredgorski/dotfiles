@@ -3,7 +3,7 @@
 This is a rather simple dotfiles system consisting of a small Perl script which recursively symlinks the contents of selected directories into the user's `$HOME` directory. The main components of this system are "root" directories, the `PATHS_LN.txt` and `PATHS_CP.txt` files, and the main script.
 
 ### "Root" directories
-Dotfiles should be stored in "root" directories which contain the entire file structure that should be symlinked into `$HOME`. These "root" directories will not themselves be symlinked, only the files and directories inside them. List the "root" directories which should be built from in `PATHS.txt`.
+Dotfiles should be stored in "root" directories which contain the entire file structure that should be symlinked into `$HOME`. These "root" directories will not themselves be symlinked, only the files and directories inside them. List the "root" directories which should be built from in `PATHS_LN.txt`/`PATHS_CP.txt`.
 
 ### PATHS_LN.txt
 Fill `PATHS_LN.txt` with a newline-delimited list of directories containing the files/directories which should be symlinked into `$HOME`. These entries should simply be the names of the directories and should not begin with an initial `/`.
