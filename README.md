@@ -17,6 +17,11 @@ dir3
 
 All files and directories in `dir1`, `dir2`, and `dir3` will be symlinked into `$HOME`. If `dir1` contains a file `file1.txt`, it will be linked as `$HOME/file1.txt`. Likewise, if `dir1` contains a directory `nested1`, it will be linked as `$HOME/nested1/`.
 
+### PATHS_CP.txt
+Some dotfiles should be copied rather than symlinked, such as shell profile configurations. Directories which are added to both `PATHS.txt` and `PATHS_CP.txt` will be copied into `$HOME` rather than symlinked.
+
+_NOTE: "root" directories which need to be copied rather than symlinked should be added to **both** `PATHS.txt` and `PATHS_CP.txt`._
+
 ### init.pl
 To make the symlinks as configured in the dotfiles directories and `PATHS.txt`, run:
 
