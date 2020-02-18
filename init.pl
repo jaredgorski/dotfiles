@@ -81,7 +81,7 @@ find({ wanted => \&link_to_home, no_chdir => 1 }, @dfdir_paths);
 
 if (!defined $ENV{'DOTFILES'}) {
   print "\nDOTFILES can be found at: $FindBin::Bin\n";
-  print "\nTo add \$DOTFILES to a shell config, run:\n\t`echo \"\\nexport DOTFILES=$FindBin::Bin\" >> shells/{{config_filepath}}`\n\n";
+  print "\nTo add \$DOTFILES to a shell config, run:\n\t`echo \"\\nexport DOTFILES=$FindBin::Bin\" >> {{config_filepath}}`\n\n";
 } else {
   print "\n";
 }
