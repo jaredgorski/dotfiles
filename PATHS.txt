@@ -1,3 +1,5 @@
+bash
+zsh
 ctags
 emacs
 git

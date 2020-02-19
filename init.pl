@@ -7,141 +7,183 @@ use File::Find;
 use File::Path qw(make_path);
 use FindBin;
 
+# A nice greeting
 my $greeting = << 'EOS';
-    +-------------------------------+
-    |                               |
-    |   jaredgorski/dotfiles        |
-    |                               |
-    +-------------------------------+
+      +-------------------------------+
+      |                               |
+      |       jaredgorski/dotfiles    |
+      |                               |
+      +-------------------------------+
 EOS
 print "\n$greeting\n";
 
-# Get $HOME directory
-my $home = $ENV{"HOME"};
+# Declare variables
+my (
+    $home,                          # the $HOME directory
+    $is_archived,                   # flag to denote whether files have been archived
+    $archive_dir,                   # path to directory where archived files are stored
+    $pathsfile,                     # the file containing dirs whose contents to symlink
+    $pathsfile_exists,              # flag to denote whether pathsfile exists
+    $pathsfile_cp,                  # the file containing dirs whose contents to copy
+    $pathsfile_cp_exists,           # flag to denote whether pathsfile_cp exists
+    @dfdir_paths,                   # dirs to symlink
+    @dfdir_paths_cp,                # dirs to copy
+);
 
-print " HOME: $home\n";
+# Initialize flags
+$is_archived = 0;
+$pathsfile_exists = 0;
+$pathsfile_cp_exists = 0;
 
-# Make archive directory for current job
-my $timestamp = localtime(time);
-my $archive_dir = "$home/.dotfiles_archive/$timestamp";
+# Define pathsfile and pathsfile_cp filepaths
+$pathsfile = "$FindBin::Bin/PATHS.txt";
+$pathsfile_cp = "$FindBin::Bin/PATHS_CP.txt";
 
-# Create archive directory for current job
-make_path($archive_dir) or die "Could not create archive directory: $!";
+# Set pathsfile_exists flag
+if (-e $pathsfile) {
+    $pathsfile_exists = 1;
+}
 
-print " ARCHIVE: $archive_dir\n";
+# Set pathsfile_cp_exists flag
+if (-e $pathsfile_cp) {
+    $pathsfile_cp_exists = 1;
+}
 
-# Initialize flag to denote whether files have been archived
-my $is_archived = 0;
-
-# Get dotfiles directory paths from PATHS_LN.txt
-print "\n1a) Getting dotfiles directory paths for symlink from PATHS_LN.txt\n";
-
-my $paths_ln_file = "$FindBin::Bin/PATHS_LN.txt";
-
-open my $fh_ln, "<", $paths_ln_file or die "Could not open paths_ln file: $!\n";
-chomp(my @dfdir_paths_ln = <$fh_ln>);
-close $fh_ln or die "Could not close paths_ln file: $!\n";
-
-# Get dotfiles directory paths to copy rather than link from PATHS_CP.txt
-print "\n1b) Getting list of dotfiles directory paths for copy from PATHS_CP.txt\n";
-
-my $paths_cp_file = "$FindBin::Bin/PATHS_CP.txt";
-
-open my $fh_cp, "<", $paths_cp_file or die "Could not open paths_cp file: $!\n";
-chomp(my @dfdir_paths_cp = <$fh_cp>);
-close $fh_cp or die "Could not close paths_cp file: $!\n";
+unless ($pathsfile_exists || $pathsfile_cp_exists) {
+    die "\n    ! No PATHS.txt or PATHS_CP.txt file found.\n\n";
+}
 
 # Link dotfiles to $HOME
 sub link_to_home {
-  my ($path)= $_;
-  my $src = "$FindBin::Bin/$path";
+    my ($path)= $_;
+    my $src = "$FindBin::Bin/$path";
 
-  $path =~ m/.*\//;
+    $path =~ m/.*\//;
 
-  if ($') {
-    print "\n    $'";
+    if ($') {
+        print "\n\n    $'";
 
-    my $dest = "$home/$'";
-    
-    # If destination file exists, archive it
-    if (-e $dest && !-l $dest) {
-      print "\n\t! File exists in \$HOME directory. Moving to archive \n\t  before linking.";
+        my $dest = "$home/$'";
 
-      my $archive_dest = "$archive_dir/$'";
-      move $dest, $archive_dest; 
+        # If destination file exists, respond accordingly
+        if (-e $dest && !-l $dest) {
+            print "\n\t! File exists in \$HOME directory. Moving to archive \n\t    before linking.";
 
-      # Denote that files have been archived
-      $is_archived = 1;
+            my $archive_dest = "$archive_dir/$'";
+            move $dest, $archive_dest; 
+
+            # Denote that files have been archived
+            $is_archived = 1;
+        } elsif (-l $dest) {
+            print "\n\t! Symlink already exists in \$HOME directory. Doing nothing.";
+
+            return;
+        }
+
+        if (-e $src) {
+            print "\n\t+ Linking: \n\t  $src \n\t        -> $dest\n";
+
+            symlink $src, $dest;
+        } else {
+            print STDERR "\n\tERR: \n\t  Path in PATHS.txt does not exist: \n\t      $src\n";
+        }
     }
-
-    if (-e $src) {
-      print "\n\t+ Linking: \n\t  $src \n\t    -> $dest\n";
-
-      symlink $src, $dest;
-    } else {
-      print STDERR "\n\tERR: \n\t  Path in PATHS_LN.txt does not exist: \n\t    $src\n";
-    }
-  }
 }
 
 # Copy dotfiles to $HOME
 sub copy_to_home {
-  my ($path)= $_;
-  my $src = "$FindBin::Bin/$path";
+    my ($path)= $_;
+    my $src = "$FindBin::Bin/$path";
 
-  $path =~ m/.*\//;
+    $path =~ m/.*\//;
 
-  if ($') {
-    print "\n    $'";
+    if ($') {
+        print "\n\n    $'";
 
-    my $dest = "$home/$'";
-    
-    # If destination file exists, archive it
-    if (-e $dest) {
-      if (-l $dest) {
-        print "\n\t! Symlink exists in \$HOME directory. Removing symlink \n\t  before copying.";
+        my $dest = "$home/$'";
 
-        unlink $dest;
-      } else {
-        print "\n\t! File exists in \$HOME directory. Moving to archive \n\t  before copying.";
+        # If destination file exists, respond accordingly
+        if (-e $dest) {
+            if (-l $dest) {
+                print "\n\t! Symlink exists in \$HOME directory. Removing symlink \n\t  before copying.";
 
-        my $archive_dest = "$archive_dir/$'";
-        move $dest, $archive_dest; 
+                unlink $dest;
+            } else {
+                print "\n\t! File exists in \$HOME directory. Moving to archive \n\t    before copying.";
 
-        # Denote that files have been archived
-        $is_archived = 1;
-      }
+                my $archive_dest = "$archive_dir/$'";
+                move $dest, $archive_dest; 
+
+                # Denote that files have been archived
+                $is_archived = 1;
+            }
+        }
+
+        if (-e $src) {
+            print "\n\t+ Copying: \n\t  $src \n\t        -> $dest\n";
+
+            copy $src, $dest;
+        } else {
+            print STDERR "\n\tERR: \n\t  Path in PATHS_CP.txt does not exist: \n\t      $src\n";
+        }
     }
 
-    if (-e $src) {
-      print "\n\t+ Copying: \n\t  $src \n\t    -> $dest\n";
-
-      copy $src, $dest;
-    } else {
-      print STDERR "\n\tERR: \n\t  Path in PATHS_CP.txt does not exist: \n\t    $src\n";
-    }
-  }
 }
 
-# Link dotfiles in PATHS_LN.txt directories to $HOME directory
-print "\n2a) Linking dotfiles to \$HOME directory\n";
+# Get and print $HOME directory
+$home = $ENV{"HOME"};
+print " HOME: $home\n";
 
-find({ wanted => \&link_to_home, no_chdir => 1 }, @dfdir_paths_ln);
+# Make and print archive directory for current job
+my $timestamp = localtime(time);
+$archive_dir = "$home/.dotfiles_archive/$timestamp";
+make_path($archive_dir) or die "Could not create archive directory: $!";
+print " ARCHIVE: $archive_dir\n";
 
-# Link dotfiles in PATHS_CP.txt directories to $HOME directory
-print "\n2b) Copying dotfiles to \$HOME directory\n";
+if ($pathsfile_exists) {
+    # Get dotfiles directory paths from PATHS.txt
+    print "\n1-ln) Getting dotfiles directory paths for symlink from PATHS.txt\n";
 
-find({ wanted => \&copy_to_home, no_chdir => 1 }, @dfdir_paths_cp);
+    open my $fh, "<", $pathsfile or die "Could not open paths file: $!\n";
+    chomp(@dfdir_paths = <$fh>);
+    close $fh or die "Could not close paths file: $!\n";
+}
 
-# If $DOTFILES is not defined, prompt to add export var to shell config
+if ($pathsfile_cp_exists) {
+    # Get dotfiles directory paths to copy rather than link from PATHS_CP.txt
+    print "\n1-cp) Getting list of dotfiles directory paths for copy from PATHS_CP.txt\n";
+
+    open my $fh_cp, "<", $pathsfile_cp or die "Could not open paths_cp file: $!\n";
+    chomp(@dfdir_paths_cp = <$fh_cp>);
+    close $fh_cp or die "Could not close paths_cp file: $!\n";
+}
+
+# If pathsfile exists, link dotfiles in PATHS.txt directories to $HOME directory
+if ($pathsfile_exists) {
+    print "\n2-ln) Linking dotfiles to \$HOME directory";
+    find({ wanted => \&link_to_home, no_chdir => 1 }, @dfdir_paths);
+    print "\n";
+}
+
+# If pathsfile_cp exists, copy dotfiles in PATHS_CP.txt directories to $HOME directory
+if ($pathsfile_cp_exists) {
+    print "\n\n2-cp) Copying dotfiles to \$HOME directory";
+    find({ wanted => \&copy_to_home, no_chdir => 1 }, @dfdir_paths_cp);
+    print "\n";
+}
+
+# If $DOTFILES env var is not defined, prompt to add export var to shell config
 if (!defined $ENV{'DOTFILES'}) {
-  print "\nDOTFILES can be found at: $FindBin::Bin\n";
-  print "\nTo add \$DOTFILES to a shell config, run:\n\t`echo \"\\nexport DOTFILES=$FindBin::Bin\" >> {{config_filepath}}`\n\n";
-} else {
-  print "\n";
+    print "\nDOTFILES can be found at: $FindBin::Bin\n";
+    print "\nTo add \$DOTFILES to a shell config, run:\n\t`echo \"\\nexport DOTFILES=$FindBin::Bin\" >> {{config_filepath}}`\n";
 }
 
 # If is_archived flag is still false, remove empty archive directory for current job
 if (!$is_archived) {
-  rmdir $archive_dir;
+    rmdir $archive_dir;
 }
+
+# Add whitespace before exit
+print "\n";
+
+exit 0;
