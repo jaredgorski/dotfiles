@@ -7,6 +7,8 @@ use File::Find;
 use File::Path qw(make_path);
 use FindBin;
 
+
+
 # A nice greeting
 my $greeting = << 'EOS';
       +-------------------------------+
@@ -16,6 +18,8 @@ my $greeting = << 'EOS';
       +-------------------------------+
 EOS
 print "\n$greeting\n";
+
+
 
 # Declare variables
 my (
@@ -49,11 +53,14 @@ if (-e $pathsfile_cp) {
     $pathsfile_cp_exists = 1;
 }
 
+# If no paths or paths_cp file, die
 unless ($pathsfile_exists || $pathsfile_cp_exists) {
     die "\n    ! No PATHS.txt or PATHS_CP.txt file found.\n\n";
 }
 
-# Link dotfiles to $HOME
+
+
+# Define sub to link dotfiles to $HOME
 sub link_to_home {
     my ($path)= $_;
     my $src = "$FindBin::Bin/$path";
@@ -90,7 +97,7 @@ sub link_to_home {
     }
 }
 
-# Copy dotfiles to $HOME
+# Define sub to copy dotfiles to $HOME
 sub copy_to_home {
     my ($path)= $_;
     my $src = "$FindBin::Bin/$path";
@@ -127,8 +134,9 @@ sub copy_to_home {
             print STDERR "\n\tERR: \n\t  Path in PATHS_CP.txt does not exist: \n\t      $src\n";
         }
     }
-
 }
+
+
 
 # Get and print $HOME directory
 $home = $ENV{"HOME"};
