@@ -74,7 +74,7 @@ sub link_to_home {
 
         # If destination file exists, respond accordingly
         if (-e $dest && !-l $dest) {
-            print "\n\t! File exists in \$HOME directory. Moving to archive \n\t    before linking.";
+            print "\n\t! File exists in \$HOME directory. Moving to archive \n\t  before linking.";
 
             my $archive_dest = "$archive_dir/$'";
             move $dest, $archive_dest; 
@@ -110,20 +110,18 @@ sub copy_to_home {
         my $dest = "$home/$'";
 
         # If destination file exists, respond accordingly
-        if (-e $dest) {
-            if (-l $dest) {
-                print "\n\t! Symlink exists in \$HOME directory. Removing symlink \n\t  before copying.";
+        if (-e $dest && !-l $dest) {
+            print "\n\t! File exists in \$HOME directory. Moving to archive \n\t  before copying.";
 
-                unlink $dest;
-            } else {
-                print "\n\t! File exists in \$HOME directory. Moving to archive \n\t    before copying.";
+            my $archive_dest = "$archive_dir/$'";
+            move $dest, $archive_dest; 
 
-                my $archive_dest = "$archive_dir/$'";
-                move $dest, $archive_dest; 
+            # Denote that files have been archived
+            $is_archived = 1;
+        } elsif (-l $dest) {
+            print "\n\t! Symlink exists in \$HOME directory. Removing symlink \n\t  before copying.";
 
-                # Denote that files have been archived
-                $is_archived = 1;
-            }
+            unlink $dest;
         }
 
         if (-e $src) {
