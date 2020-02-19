@@ -1,4 +1,8 @@
-# dotfiles
+<div align="center">
+  <h1>
+    dotfiles
+  </h1>
+</div>
 
 This is a rather simple dotfiles system consisting of a small Perl script which recursively symlinks the contents of selected directories into the user's `$HOME` directory. The main components of this system are "root" directories, the `PATHS.txt` file, and the main script.
 
