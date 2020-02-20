@@ -58,7 +58,8 @@ export KEYTIMEOUT=1
 
 alias gcm='git commit --message'
 alias gco='git checkout'
-alias gcob="git checkout -b"
+alias gcob='git checkout -b'
+alias gst='git status'
 
 # ----------------------
 # Other Aliases
