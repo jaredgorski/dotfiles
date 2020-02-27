@@ -113,10 +113,10 @@ Plug 'w0rp/ale'
 call plug#end()
 
 "colorscheme commands
-command ColorschemeDark set background=dark | colorscheme spacecamp
-command ColorschemeLight set background=light | colorscheme PaperColor
-command ColorschemeLtDk set background=dark | colorscheme spacecamp_lite
+command ColorsDark set background=dark | colorscheme spacecamp
+command ColorsLight set background=light | colorscheme PaperColor
+command ColorsMed set background=dark | colorscheme spacecamp_lite
 
 "default colorscheme
-ColorschemeDark
+ColorsDark
 
