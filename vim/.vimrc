@@ -1,30 +1,30 @@
 syntax on
+
+"basic settings
+set ai
+set guicursor= "disable gui cursor changing
+set hlsearch
+set ignorecase
+set incsearch
+set nobackup
+set noeb vb t_vb= "disable errorbells and visualbell
+set nofixendofline
 set number
 set relativenumber
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set visualbell t_vb=
-set novisualbell
-set nofixendofline
-set tabstop=2
-set softtabstop=2 expandtab
+set scrolloff=1 "add 1 line of scroll padding on top and bottom
 set shiftwidth=2 smarttab
-set scrolloff=1
-set ai
-set nobackup
 set showcmd
+set smartcase
+set softtabstop=2 expandtab
+set tabstop=2
+
+"filetype settings
 filetype plugin indent on
-let g:netrw_liststyle=3
 
-" disable gui cursor changing
-set guicursor=
-
-" map leader to space
+"map leader to space
 map <Space> <Leader>
 
-" native vim status line config
+"native vim status line config
 set laststatus=2
 set statusline=
 set statusline+=\ 
@@ -42,10 +42,10 @@ set statusline+=\
 set statusline+=%l:%c
 set statusline+=\ 
 
-" ctags search path
+"ctags search path
 set tags=./.tags,.tags;
 
-" gutentags setup
+"gutentags setup
 let g:gutentags_ctags_tagfile = '.tags'
 let g:gutentags_file_list_command = {
       \ 'markers': {
@@ -54,46 +54,48 @@ let g:gutentags_file_list_command = {
       \ }
 let g:gutentags_generate_on_new = 1
 
-" toggle tagbar
+"toggle tagbar
 nmap <C-t> :TagbarToggle<CR>
 
-" open ctrlsf search
+"open ctrlsf search
 nnoremap <C-F> :CtrlSF 
 
-" search highlighted word in file
+"search highlighted word in file
 vnoremap // y/<C-R>"<CR>
 
-" toggle nerdtree
+"netrw settings
+let g:netrw_liststyle=3
+
+"toggle nerdtree
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" show hidden files in nerdtree
+"show hidden files in nerdtree
 let NERDTreeShowHidden=1
 
-" update all open buffers if external edits
+"update all open buffers if external edits
 map <C-z> :bufdo :e!<CR>
 
-" fzf fuzzy file search
+"fzf fuzzy file search
 map <C-p> :FZF<CR>
 
-" use ack.vim with silver_searcher
+"use ack.vim with silver_searcher
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-" Disable ALE highlighting
+"Disable ALE highlighting
 let g:ale_set_highlights = 0
 
-" wildignore config
+"wildignore config
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
-" code folding
+"code folding
 set foldmethod=manual
 
-" plugs
+"plugs
 call plug#begin('~/.vim/plugged')
 
 Plug '/usr/local/opt/fzf'
 Plug 'airblade/vim-gitgutter'
-Plug 'aonemd/kuroi.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'elzr/vim-json'
 Plug 'jaredgorski/spacecamp'
@@ -101,15 +103,20 @@ Plug 'junegunn/goyo.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/vim-jsx-improve'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'pangloss/vim-javascript'
 Plug 'sgur/vim-editorconfig'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sleuth'
 Plug 'w0rp/ale'
-Plug 'xero/sourcerer.vim'
 
 call plug#end()
 
-" colors
-set background=dark
-colorscheme spacecamp
+"colorscheme commands
+command ColorschemeDark set background=dark | colorscheme spacecamp
+command ColorschemeLight set background=light | colorscheme PaperColor
+command ColorschemeLtDk set background=dark | colorscheme spacecamp_lite
+
+"default colorscheme
+ColorschemeDark
+
