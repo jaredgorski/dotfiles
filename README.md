@@ -14,9 +14,9 @@ In the future, I plan to include a bootstrapping script which will enable instal
   - Stow: https://metacpan.org/pod/Stow
 
 ### Options
-**-t**, **--target** : Define target directory. Absolute path. Defaults to `$HOME`.
-**-d**, **--delete** : Remove symlinks from target directory.
-**-r**, **--restow** : Remove and re-link symlinks in target directory. Helpful for pruning stale stow artifacts.
+**-t**, **--target** : Define target directory. Absolute path. Defaults to `$HOME`.<br/>
+**-d**, **--delete** : Remove symlinks from target directory.<br/>
+**-r**, **--restow** : Remove and re-link symlinks in target directory. Helpful for pruning stale stow artifacts.<br/>
 
 ### Usage
 ```console
