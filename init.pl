@@ -2,27 +2,25 @@
 
 ######################################################################
 #
+#   This script uses GNU stow to create, delete, and refresh
+#   symlinks between the contents of directories listed
+#   in a config file (config.df) and the target directory,
+#   normally the user's $HOME directory.
 #
-# This script uses GNU stow to create, delete, and refresh
-# symlinks between the contents of directories listed
-# in a config file (config.df) and the target directory,
-# normally the user's $HOME directory.
 #
+#   USAGE:
 #
-# USAGE:
+#     -t, --target
+#         Define target directory. Defaults to $HOME.
 #
-#   -t, --target
-#       Define target directory. Defaults to $HOME.
+#     -d, --delete
+#         Remove symlinks from target directory based on paths
+#         in config.df.
 #
-#   -d, --delete
-#       Remove symlinks from target directory based on paths
-#       in config.df.
-#
-#   -r, --restow
-#       Remove and re-link symlinks in target directory based 
-#       on paths in config.df. Helpful for pruning stale stow 
-#       artifacts.
-#
+#     -r, --restow
+#         Remove and re-link symlinks in target directory based 
+#         on paths in config.df. Helpful for pruning stale stow 
+#         artifacts.
 #
 ######################################################################
 
