@@ -1,7 +1,0 @@
-bash
-zsh
-ctags
-emacs
-git
-tmux
-vim

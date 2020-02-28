@@ -1,0 +1,11 @@
+# To comment a line, prepend with '#'. Only full lines can be commented.
+
+[PATHS BEGIN]
+bash
+zsh
+ctags
+emacs
+git
+tmux
+vim
+[PATHS END]

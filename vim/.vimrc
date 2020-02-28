@@ -95,7 +95,9 @@ set foldmethod=manual
 call plug#begin('~/.vim/plugged')
 
 Plug '/usr/local/opt/fzf'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'airblade/vim-gitgutter'
+Plug 'cespare/vim-toml'
 Plug 'dyng/ctrlsf.vim'
 Plug 'elzr/vim-json'
 Plug 'jaredgorski/spacecamp'
@@ -103,7 +105,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/vim-jsx-improve'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'pangloss/vim-javascript'
 Plug 'sgur/vim-editorconfig'
 Plug 'tpope/vim-fugitive'

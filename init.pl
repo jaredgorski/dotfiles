@@ -2,194 +2,124 @@
 
 use strict;
 
-use File::Copy;
-use File::Find;
-use File::Path qw(make_path);
 use FindBin;
-
-
+use Getopt::Long;
+use Stow;
 
 # A nice greeting
 my $greeting = << 'EOS';
       +-------------------------------+
       |                               |
-      |       jaredgorski/dotfiles    |
+      |     jaredgorski/dotfiles      |
       |                               |
       +-------------------------------+
 EOS
 print "\n$greeting\n";
 
-
-
-# Declare variables
+# Declare global variables
 my (
-    $home,                          # the $HOME directory
-    $is_archived,                   # flag to denote whether files have been archived
-    $archive_dir,                   # path to directory where archived files are stored
-    $pathsfile,                     # the file containing dirs whose contents to symlink
-    $pathsfile_exists,              # flag to denote whether pathsfile exists
-    $pathsfile_cp,                  # the file containing dirs whose contents to copy
-    $pathsfile_cp_exists,           # flag to denote whether pathsfile_cp exists
-    @dfdir_paths,                   # dirs to symlink
-    @dfdir_paths_cp,                # dirs to copy
+    $bindir,                        # this directory
+    $target,                        # the target directory
+    $config,                        # the config file
+    $config_exists,                 # flag to denote whether config exists
+    @config_paths,                  # dirs to symlink
+    $delete_flag,                   # flag to denote delete mode
+    $restow_flag,                   # flag to denote restow mode
 );
 
 # Initialize flags
-$is_archived = 0;
-$pathsfile_exists = 0;
-$pathsfile_cp_exists = 0;
+$config_exists = 0;
 
-# Define pathsfile and pathsfile_cp filepaths
-$pathsfile = "$FindBin::Bin/PATHS.txt";
-$pathsfile_cp = "$FindBin::Bin/PATHS_CP.txt";
+# Define bin directory
+$bindir = $FindBin::Bin;
 
-# Set pathsfile_exists flag
-if (-e $pathsfile) {
-    $pathsfile_exists = 1;
+# Define config filepath
+$config = "$bindir/config.df";
+
+# Set config_exists flag
+if (-e $config) {
+    $config_exists = 1;
+} else {
+    die "\n    ! No config file found. Aborting.\n\n";
 }
 
-# Set pathsfile_cp_exists flag
-if (-e $pathsfile_cp) {
-    $pathsfile_cp_exists = 1;
+# Initialize option vars
+$target       = '';
+$delete_flag  = 0;
+$restow_flag  = 0;
+
+# Get program options
+GetOptions('target=s' => \$target, 'delete' => \$delete_flag, 'restow' => \$restow_flag);
+
+# Verify target
+if (-e $target) {
+    print "    - TARGET: $target\n";
+} elsif (!$target && defined $ENV{"HOME"}) {
+    $target = $ENV{"HOME"};
+    print "    - TARGET: $target\n";
+} else {
+    die "\n    ! No target directory. Aborting.\n\n";
 }
 
-# If no paths or paths_cp file, die
-unless ($pathsfile_exists || $pathsfile_cp_exists) {
-    die "\n    ! No PATHS.txt or PATHS_CP.txt file found.\n\n";
+# Validate and print mode
+if ($delete_flag && $restow_flag) {
+    die "\n    ! Invalid: simultaneous delete and restow. Aborting.\n\n";
+} elsif ($delete_flag) {
+    print "\n    - MODE: delete\n";
+} elsif ($restow_flag) {
+    print "\n    - MODE: restow\n";
+} else {
+    print "\n    - MODE: default\n";
 }
 
+# Proceed with stow tasks
+my $stow = new Stow( dir => $bindir, target => $target );
 
+open my $fh, "<", $config or die "Could not open config file: $!\n";
 
-# Define sub to link dotfiles to $HOME
-sub link_to_home {
-    my ($path)= $_;
-    my $src = "$FindBin::Bin/$path";
+print "\n    - PATHS:";
 
-    $path =~ m/.*\//;
+my $paths_section = 0;
+while (my $line = <$fh>)
+{
+    $line =~ s/^\s+|\s+$//g;
 
-    if ($') {
-        print "\n\n    $'";
+    next if ($line =~ m/^#/);
 
-        my $dest = "$home/$'";
+    if ($line =~ m/\[PATHS BEGIN\]/) {
+        $paths_section = 1;
+        next;
+    } elsif ($line =~ m/\[PATHS END\]/) {
+        $paths_section = 0;
+        next;
+    };
 
-        # If destination file exists, respond accordingly
-        if (-e $dest && !-l $dest) {
-            print "\n\t! File exists in \$HOME directory. Moving to archive \n\t  before linking.";
-
-            my $archive_dest = "$archive_dir/$'";
-            move $dest, $archive_dest; 
-
-            # Denote that files have been archived
-            $is_archived = 1;
-        } elsif (-l $dest) {
-            print "\n\t! Symlink already exists in \$HOME directory. Doing nothing.";
-
-            return;
-        }
-
-        if (-e $src) {
-            print "\n\t+ Linking: \n\t  $src \n\t        -> $dest\n";
-
-            symlink $src, $dest;
-        } else {
-            print STDERR "\n\tERR: \n\t  Path in PATHS.txt does not exist: \n\t      $src\n";
-        }
+    if ($paths_section) {
+        print "\n\t+ $line";
+        push(@config_paths, $line);
     }
 }
 
-# Define sub to copy dotfiles to $HOME
-sub copy_to_home {
-    my ($path)= $_;
-    my $src = "$FindBin::Bin/$path";
+close $fh or die "Could not close config file: $!\n";
 
-    $path =~ m/.*\//;
-
-    if ($') {
-        print "\n\n    $'";
-
-        my $dest = "$home/$'";
-
-        # If destination file exists, respond accordingly
-        if (-e $dest && !-l $dest) {
-            print "\n\t! File exists in \$HOME directory. Moving to archive \n\t  before copying.";
-
-            my $archive_dest = "$archive_dir/$'";
-            move $dest, $archive_dest; 
-
-            # Denote that files have been archived
-            $is_archived = 1;
-        } elsif (-l $dest) {
-            print "\n\t! Symlink exists in \$HOME directory. Removing symlink \n\t  before copying.";
-
-            unlink $dest;
-        }
-
-        if (-e $src) {
-            print "\n\t+ Copying: \n\t  $src \n\t        -> $dest\n";
-
-            copy $src, $dest;
-        } else {
-            print STDERR "\n\tERR: \n\t  Path in PATHS_CP.txt does not exist: \n\t      $src\n";
-        }
-    }
-}
-
-
-
-# Get and print $HOME directory
-$home = $ENV{"HOME"};
-print " HOME: $home\n";
-
-# Make and print archive directory for current job
-my $timestamp = localtime(time);
-$archive_dir = "$home/.dotfiles_archive/$timestamp";
-make_path($archive_dir) or die "Could not create archive directory: $!";
-print " ARCHIVE: $archive_dir\n";
-
-if ($pathsfile_exists) {
-    # Get dotfiles directory paths from PATHS.txt
-    print "\n1-ln) Getting dotfiles directory paths for symlink from PATHS.txt\n";
-
-    open my $fh, "<", $pathsfile or die "Could not open paths file: $!\n";
-    chomp(@dfdir_paths = <$fh>);
-    close $fh or die "Could not close paths file: $!\n";
-}
-
-if ($pathsfile_cp_exists) {
-    # Get dotfiles directory paths to copy rather than link from PATHS_CP.txt
-    print "\n1-cp) Getting list of dotfiles directory paths for copy from PATHS_CP.txt\n";
-
-    open my $fh_cp, "<", $pathsfile_cp or die "Could not open paths_cp file: $!\n";
-    chomp(@dfdir_paths_cp = <$fh_cp>);
-    close $fh_cp or die "Could not close paths_cp file: $!\n";
-}
-
-# If pathsfile exists, link dotfiles in PATHS.txt directories to $HOME directory
-if ($pathsfile_exists) {
-    print "\n2-ln) Linking dotfiles to \$HOME directory";
-    find({ wanted => \&link_to_home, no_chdir => 1 }, @dfdir_paths);
-    print "\n";
-}
-
-# If pathsfile_cp exists, copy dotfiles in PATHS_CP.txt directories to $HOME directory
-if ($pathsfile_cp_exists) {
-    print "\n\n2-cp) Copying dotfiles to \$HOME directory";
-    find({ wanted => \&copy_to_home, no_chdir => 1 }, @dfdir_paths_cp);
-    print "\n";
-}
-
-# If $DOTFILES env var is not defined, prompt to add export var to shell config
-if (!defined $ENV{'DOTFILES'}) {
-    print "\nDOTFILES can be found at: $FindBin::Bin\n";
-    print "\nTo add \$DOTFILES to a shell config, run:\n\t`echo \"\\nexport DOTFILES=$FindBin::Bin\" >> {{config_filepath}}`\n";
-}
-
-# If is_archived flag is still false, remove empty archive directory for current job
-if (!$is_archived) {
-    rmdir $archive_dir;
-}
-
-# Add whitespace before exit
 print "\n";
 
-exit 0;
+if ($delete_flag) {
+    $stow->plan_unstow(@config_paths);
+} elsif ($restow_flag) {
+    $stow->plan_unstow(@config_paths);
+    $stow->plan_stow(@config_paths);
+} else {
+    $stow->plan_stow(@config_paths);
+}
+
+my %conflicts = $stow->get_conflicts;
+$stow->process_tasks() unless %conflicts;
+
+# Print result and exit
+if (!%conflicts) {
+    print "\n    > Success.\n\n";
+    exit 0;
+} else {
+    exit 1;
+}
