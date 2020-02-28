@@ -6,6 +6,9 @@
 # node modules
 node_modules
 
+# nvm
+.nvmrc
+
 # ds store
 .DS_Store
 
