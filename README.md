@@ -14,13 +14,19 @@ In the future, I plan to include a bootstrapping script which will enable instal
   - Stow: https://metacpan.org/pod/Stow
 
 ### Options
-**-t**, **--target** : Define target directory. Defaults to `$HOME`.
+**-t**, **--target** : Define target directory. Absolute path. Defaults to `$HOME`.
 **-d**, **--delete** : Remove symlinks from target directory.
 **-r**, **--restow** : Remove and re-link symlinks in target directory. Helpful for pruning stale stow artifacts.
 
 ### Usage
 ```console
-$ perl init.pl [ -d, --delete | -r, --restow ]
+$ perl init.pl
+
+$ perl init.pl -t /absolute/path/to/target/dir
+
+$ perl init.pl -d
+
+$ perl init.pl -r
 ```
 
 ### "Root" directories

@@ -1,5 +1,31 @@
 #! perl -w
 
+######################################################################
+#
+#
+# This script uses GNU stow to create, delete, and refresh
+# symlinks between the contents of directories listed
+# in a config file (config.df) and the target directory,
+# normally the user's $HOME directory.
+#
+#
+# USAGE:
+#
+#   -t, --target
+#       Define target directory. Defaults to $HOME.
+#
+#   -d, --delete
+#       Remove symlinks from target directory based on paths
+#       in config.df.
+#
+#   -r, --restow
+#       Remove and re-link symlinks in target directory based 
+#       on paths in config.df. Helpful for pruning stale stow 
+#       artifacts.
+#
+#
+######################################################################
+
 use strict;
 
 use FindBin;
@@ -27,16 +53,16 @@ my (
     $restow_flag,                   # flag to denote restow mode
 );
 
-# Initialize flags
-$config_exists = 0;
-
-# Define bin directory
+# Define bin directory (this directory).
+# This will be used as the stow directory
+# when Stow looks for "root" directories
+# to recursively symlink into $target.
 $bindir = $FindBin::Bin;
 
-# Define config filepath
 $config = "$bindir/config.df";
 
-# Set config_exists flag
+$config_exists = 0;
+
 if (-e $config) {
     $config_exists = 1;
 } else {
@@ -51,7 +77,7 @@ $restow_flag  = 0;
 # Get program options
 GetOptions('target=s' => \$target, 'delete' => \$delete_flag, 'restow' => \$restow_flag);
 
-# Verify target
+# Verify target directory or use $HOME if not provided
 if (-e $target) {
     print "    - TARGET: $target\n";
 } elsif (!$target && defined $ENV{"HOME"}) {
