@@ -95,11 +95,11 @@ set foldmethod=manual
 call plug#begin('~/.vim/plugged')
 
 Plug '/usr/local/opt/fzf'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'airblade/vim-gitgutter'
 Plug 'cespare/vim-toml'
 Plug 'dyng/ctrlsf.vim'
 Plug 'elzr/vim-json'
+Plug 'jaredgorski/fogbell.vim'
 Plug 'jaredgorski/spacecamp'
 Plug 'junegunn/goyo.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -114,10 +114,12 @@ Plug 'w0rp/ale'
 call plug#end()
 
 "colorscheme commands
-command ColorsDark set background=dark | colorscheme spacecamp
-command ColorsLight set background=light | colorscheme PaperColor
-command ColorsMed set background=dark | colorscheme spacecamp_lite
+command ColschemeDark colorscheme spacecamp
+command ColschemeLight colorscheme fogbell_light
+command ColschemeMed colorscheme spacecamp_lite
+command ColschemeMono colorscheme fogbell
+command ColschemeMonolite colorscheme fogbell_lite
 
 "default colorscheme
-ColorsDark
+ColschemeMono
 
