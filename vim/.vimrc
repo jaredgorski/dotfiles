@@ -123,6 +123,5 @@ command ColschemeMonolite syntax on | colorscheme fogbell_lite
 command ColschemeMonoliteMono colorscheme fogbell_lite | syntax off
 
 "default colorscheme
-ColschemeMonoMono
+ColschemeMono
 
-syntax off
