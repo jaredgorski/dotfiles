@@ -114,12 +114,15 @@ Plug 'w0rp/ale'
 call plug#end()
 
 "colorscheme commands
-command ColschemeDark colorscheme spacecamp
-command ColschemeLight colorscheme fogbell_light
-command ColschemeMed colorscheme spacecamp_lite
-command ColschemeMono colorscheme fogbell
-command ColschemeMonolite colorscheme fogbell_lite
+command ColschemeDark syntax on | colorscheme spacecamp
+command ColschemeLight syntax on | colorscheme fogbell_light
+command ColschemeMed syntax on | colorscheme spacecamp_lite
+command ColschemeMono syntax on | colorscheme fogbell
+command ColschemeMonoMono colorscheme fogbell | syntax off
+command ColschemeMonolite syntax on | colorscheme fogbell_lite
+command ColschemeMonoliteMono colorscheme fogbell_lite | syntax off
 
 "default colorscheme
-ColschemeMono
+ColschemeMonoMono
 
+syntax off
