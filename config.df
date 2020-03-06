@@ -9,6 +9,7 @@
 # /////////////////////////////
 [PATHS BEGIN]
 
+  alacritty
   bash
   zsh
   ctags
