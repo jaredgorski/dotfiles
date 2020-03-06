@@ -3,6 +3,9 @@
 *.swp
 *.swo
 
+# emacs temporary files
+.[#]*[#]
+
 # node modules
 node_modules
 
@@ -11,12 +14,6 @@ node_modules
 
 # ds store
 .DS_Store
-
-# vim ctags
-tags
-tags.lock
-tags.temp
-tags.temp.tmp
 
 # java
 *.class
@@ -36,3 +33,7 @@ out/
 
 # ctags
 .tags*
+tags
+tags.lock
+tags.temp
+tags.temp.tmp
