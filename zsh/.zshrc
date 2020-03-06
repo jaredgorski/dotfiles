@@ -1,9 +1,15 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export HOME=/Users/jaredgorski
+
+# Some Homebrew executables live here
+export PATH=/usr/local/sbin:$PATH
 
 # Dotfiles repo
-export DOTFILES=/Users/jaredgorski/Projects/Personal/dotfiles
+export DOTFILES=$HOME/Projects/Personal/dotfiles
+
+# ----------------------
+# oh-my-zsh setup
+# ----------------------
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -13,13 +19,17 @@ source '/Users/jaredgorski/.zplugin/bin/zplugin.zsh'
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
+# trapd00r/LS_COLORS (better ls colors)
 zplugin ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh"
 zplugin load trapd00r/LS_COLORS
 
+# oh-my-zsh prompt theme
 ZSH_THEME="dollar"
 
+# oh-my-zsh plugins
 plugins=(git)
 
+# Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -29,7 +39,7 @@ DEFAULT_USER=``
 export EDITOR='vim'
 
 # ----------------------
-# ZSH Vim Stuff
+# ZSH Vim bindings
 # ----------------------
 
 # Set vi mode
@@ -53,7 +63,7 @@ bindkey -M vicmd "^V" edit-command-line
 export KEYTIMEOUT=1
 
 # ----------------------
-# Git Aliases
+# Git aliases
 # ----------------------
 
 alias gcm='git commit --message'
@@ -69,16 +79,16 @@ alias gst='git stash'
 alias python='python3'
 alias pip='pip3'
 
-# clear shortcut
+# clear screen shortcut
 alias cl='clear'
 
 # ----------------------
-# Environment Variables
+# Environment variables
+# (and installations)
 # ----------------------
 
 # FZF
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Golang
@@ -98,14 +108,14 @@ source $HOME/perl5/perlbrew/etc/bashrc
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home
 
 # scm breeze
-[ -s "/Users/jaredgorski/.scm_breeze/scm_breeze.sh" ] && source "/Users/jaredgorski/.scm_breeze/scm_breeze.sh"
+[ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
 
 # python3
 export PATH="$PATH:$HOME/Library/Python/3.7/bin"
 
+# Google Cloud SDK
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/jaredgorski/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jaredgorski/google-cloud-sdk/path.zsh.inc'; fi
-
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/jaredgorski/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jaredgorski/google-cloud-sdk/completion.zsh.inc'; fi
 
