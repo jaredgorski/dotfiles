@@ -79,6 +79,9 @@ alias gst='git stash'
 alias python='python3'
 alias pip='pip3'
 
+# kubectl ctx to kubectx
+alias kubectx='kubectl ctx'
+
 # clear screen shortcut
 alias cl='clear'
 
