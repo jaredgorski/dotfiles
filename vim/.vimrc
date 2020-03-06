@@ -1,29 +1,33 @@
+"~~~~~~~~~~~~~~~~~~~~~~
+"       general
+"~~~~~~~~~~~~~~~~~~~~~~
 syntax on
 
 "basic settings
 set ai
-set guicursor= "disable gui cursor changing
-set hlsearch
+set guicursor=                              "disable gui cursor changing
 set ignorecase
-set incsearch
+set hlsearch
+set incsearch                               "allow incremental search
 set nobackup
-set noeb vb t_vb= "disable errorbells and visualbell
+set noeb vb t_vb=                           "disable errorbells and visualbell
 set nofixendofline
 set number
 set relativenumber
-set scrolloff=1 "add 1 line of scroll padding on top and bottom
+set scrolloff=1                             "add 1 line of scroll padding on top and bottom
 set shiftwidth=2 smarttab
 set showcmd
 set smartcase
 set softtabstop=2 expandtab
 set tabstop=2
+set foldmethod=manual                       "code folding
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip    "wildignore path
 
-"filetype settings
-filetype plugin indent on
+filetype plugin indent on                   "filetype settings
 
-"map leader to space
-map <Space> <leader>
-
+"~~~~~~~~~~~~~~~~~~~~~~
+"     status line
+"~~~~~~~~~~~~~~~~~~~~~~
 "native vim status line config
 set laststatus=2
 set statusline=
@@ -45,29 +49,12 @@ set statusline+=\
 "ctags search path
 set tags=./.tags,.tags;
 
-"gutentags setup
-let g:gutentags_ctags_tagfile = '.tags'
-let g:gutentags_file_list_command = {
-      \ 'markers': {
-      \ '.git': 'git ls-files',
-      \ },
-      \ }
-let g:gutentags_generate_on_new = 1
-
-"toggle tagbar
-nmap <leader>t :TagbarToggle<CR>
-
-"open ctrlsf search
-nnoremap <leader>f :CtrlSF 
-
-"search highlighted word in file - extends * and # to work with visual
-vnoremap * y/<C-R>"<CR>
-vnoremap # y?<C-R>"<CR>
-
-"netrw settings
+"~~~~~~~~~~~~~~~~~~~~~~
+"        netrw
+"~~~~~~~~~~~~~~~~~~~~~~
 let g:netrw_liststyle=1
 
-"netrw toggle function and mapping
+"netrw toggle function
 function ToggleNetrw()
   if &filetype == 'netrw'
     if expand('#:t') != ''
@@ -81,7 +68,22 @@ function ToggleNetrw()
     execute "Explore"
   endif
 endfunction
+
+"~~~~~~~~~~~~~~~~~~~~~~
+"       mappings
+"~~~~~~~~~~~~~~~~~~~~~~
+"map leader to space
+map <Space> <leader>
+
+"netrw easy toggle
 map <leader>n :call ToggleNetrw()<CR>
+
+"ctrlsf search
+nnoremap <leader>f :CtrlSF 
+
+"search highlighted word in file - extends * and # to work with visual
+vnoremap * y/<C-R>"<CR>
+vnoremap # y?<C-R>"<CR>
 
 "update all open buffers if external edits
 map <leader>z :bufdo :e!<CR>
@@ -89,28 +91,20 @@ map <leader>z :bufdo :e!<CR>
 "fzf fuzzy file search
 map <leader>p :FZF<CR>
 
-"Disable ALE highlighting
-let g:ale_set_highlights = 0
-
-"wildignore config
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-
-"code folding
-set foldmethod=manual
-
+"~~~~~~~~~~~~~~~~~~~~~~
+"       plugins
+"~~~~~~~~~~~~~~~~~~~~~~
 "plugs
 call plug#begin('~/.vim/plugged')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'cespare/vim-toml'
 Plug 'dyng/ctrlsf.vim'
-Plug 'elzr/vim-json'
 Plug 'jaredgorski/fogbell.vim'
 Plug 'jaredgorski/spacecamp'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'pangloss/vim-javascript'
 Plug 'sgur/vim-editorconfig'
@@ -121,6 +115,12 @@ Plug 'w0rp/ale'
 
 call plug#end()
 
+"plugin settings
+let g:ale_set_highlights = 0                              "Disable ALE highlighting
+
+"~~~~~~~~~~~~~~~~~~~~~~
+"       colors
+"~~~~~~~~~~~~~~~~~~~~~~
 "colorscheme commands
 command ColschemeDark syntax on | colorscheme spacecamp
 command ColschemeLight syntax on | colorscheme fogbell_light
