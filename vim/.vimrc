@@ -22,7 +22,7 @@ set tabstop=2
 filetype plugin indent on
 
 "map leader to space
-map <Space> <Leader>
+map <Space> <leader>
 
 "native vim status line config
 set laststatus=2
@@ -58,7 +58,7 @@ let g:gutentags_generate_on_new = 1
 nmap <C-t> :TagbarToggle<CR>
 
 "open ctrlsf search
-nnoremap <C-F> :CtrlSF 
+nnoremap <leader>f :CtrlSF 
 
 "search highlighted word in file
 vnoremap // y/<C-R>"<CR>
@@ -74,10 +74,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeShowHidden=1
 
 "update all open buffers if external edits
-map <C-z> :bufdo :e!<CR>
+map <leader>z :bufdo :e!<CR>
 
 "fzf fuzzy file search
-map <C-p> :FZF<CR>
+map <leader>p :FZF<CR>
 
 "use ack.vim with silver_searcher
 let g:ackprg = 'ag --nogroup --nocolor --column'
