@@ -65,23 +65,29 @@ vnoremap * y/<C-R>"<CR>
 vnoremap # y?<C-R>"<CR>
 
 "netrw settings
-let g:netrw_liststyle=3
+let g:netrw_liststyle=1
 
-"toggle nerdtree
-map <leader>n :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"show hidden files in nerdtree
-let NERDTreeShowHidden=1
+"netrw toggle function and mapping
+function ToggleNetrw()
+  if &filetype == 'netrw'
+    if expand('#:t') != ''
+      execute "bprevious"
+    else
+      execute "Rexplore"
+    endif
+  elseif expand('%:t') != ''
+    execute "Explore %:h"
+  else
+    execute "Explore"
+  endif
+endfunction
+map <leader>n :call ToggleNetrw()<CR>
 
 "update all open buffers if external edits
 map <leader>z :bufdo :e!<CR>
 
 "fzf fuzzy file search
 map <leader>p :FZF<CR>
-
-"use ack.vim with silver_searcher
-let g:ackprg = 'ag --nogroup --nocolor --column'
 
 "Disable ALE highlighting
 let g:ale_set_highlights = 0
@@ -95,19 +101,20 @@ set foldmethod=manual
 "plugs
 call plug#begin('~/.vim/plugged')
 
-Plug '/usr/local/opt/fzf'
 Plug 'airblade/vim-gitgutter'
 Plug 'cespare/vim-toml'
 Plug 'dyng/ctrlsf.vim'
 Plug 'elzr/vim-json'
 Plug 'jaredgorski/fogbell.vim'
 Plug 'jaredgorski/spacecamp'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'mileszs/ack.vim'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'pangloss/vim-javascript'
 Plug 'sgur/vim-editorconfig'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sleuth'
 Plug 'w0rp/ale'

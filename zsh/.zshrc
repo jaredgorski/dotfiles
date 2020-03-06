@@ -76,6 +76,11 @@ alias cl='clear'
 # Environment Variables
 # ----------------------
 
+# FZF
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Golang
 export GOPATH=$HOME/projects/Go_Workspace
 export GOROOT=/usr/local/opt/go/libexec
@@ -114,4 +119,3 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # Adding autocomplete for 'lcp'
 [ -f ~/.lcp_autocomplete ] && source ~/.lcp_autocomplete
-
