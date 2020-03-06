@@ -145,5 +145,7 @@ if (!%conflicts) {
     print "\n    > Success.\n\n";
     exit 0;
 } else {
+    print "\n    ! Conflict(s) preventing stow. Please review target locations for conflicts.\n\n";
+    exit 0;
     exit 1;
 }
