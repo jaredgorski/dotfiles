@@ -1,0 +1,15 @@
+[user]
+	name = jaredgorski
+	email = jared.gorski@liferay.cloud
+[credential]
+	helper = osxkeychain
+[core]
+	excludesfile = /Users/jaredgorski/.gitignore_global
+	editor = vim
+	autocrlf = input
+[init]
+	templatedir = ~/.git_template
+[color]
+	ui = true
+[http]
+	postBuffer = 1048576000
