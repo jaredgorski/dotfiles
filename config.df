@@ -1,11 +1,91 @@
+#
 # To comment a line, prepend with '#'. Only full lines can be commented.
+#
 
+
+
+# /////////////////////////////
+#   STOW PATHS SECTION
+# /////////////////////////////
 [PATHS BEGIN]
-bash
-zsh
-ctags
-emacs
-git
-tmux
-vim
+
+  bash
+  zsh
+  ctags
+  emacs
+  git
+  tmux
+  vim
+
 [PATHS END]
+
+
+
+# /////////////////////////////
+#   MACOS BOOTSTRAP SECTION
+# /////////////////////////////
+[MACOS: BOOTSTRAP BEGIN]
+
+  # install xcode clt
+  BOOTSTRAP_PREFIX: (xcode-select -p 1>/dev/null && echo "xcode-select CLT already installed") ||
+    xcode-select --install
+
+
+  # install homebrew
+  BOOTSTRAP_PREFIX: (command -v brew >/dev/null && echo "homebrew already installed") ||
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+
+  # install brew packages
+  BOOTSTRAP_PREFIX: brew install
+    binwalk
+    cpanminus
+    go
+    htop
+    httpie
+    jq
+    kubectx
+    kubernetes-cli
+    lua
+    luajit
+    makensis
+    nasm
+    osslsigncode
+    perl
+    python
+    qemu
+    redis
+    ripgrep
+    sqlite
+    telepresence
+    telnet
+    tmux
+    universal-ctags
+    webp
+    wget
+    yarn
+    zsh
+
+
+# remaining utilities list
+  # 1password
+  # alacritty
+  # alfred3
+  # balena-etcher
+  # bartender3
+  # bear
+  # cylance
+  # docker
+  # firefox-developer-edition
+  # gifox
+  # karibiner-elements
+  # keybase
+  # keyboard-maestro
+  # magnet
+  # postman
+  # skype
+  # slack
+  # spotify
+  # vim
+
+[MACOS: BOOTSTRAP END]

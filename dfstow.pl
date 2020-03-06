@@ -108,7 +108,7 @@ while (my $line = <$fh>)
 {
     $line =~ s/^\s+|\s+$//g;
 
-    next if ($line =~ m/^#/);
+    next if ($line =~ m/^#/ || $line !~ m/\S/);
 
     if ($line =~ m/\[PATHS BEGIN\]/) {
         $paths_section = 1;
