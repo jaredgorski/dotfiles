@@ -41,30 +41,21 @@
   BOOTSTRAP_PREFIX: brew install
     binwalk
     cpanminus
-    go
     htop
     httpie
-    jq
     kubectx
-    kubernetes-cli
-    lua
-    luajit
     makensis
     nasm
     osslsigncode
     perl
     python
     qemu
-    redis
     ripgrep
-    sqlite
     telepresence
-    telnet
     tmux
-    universal-ctags
+    --HEAD universal-ctags/universal-ctags/universal-ctags
     webp
     wget
-    yarn
     zsh
 
 
