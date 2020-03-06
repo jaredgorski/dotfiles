@@ -55,19 +55,20 @@ let g:gutentags_file_list_command = {
 let g:gutentags_generate_on_new = 1
 
 "toggle tagbar
-nmap <C-t> :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR>
 
 "open ctrlsf search
 nnoremap <leader>f :CtrlSF 
 
-"search highlighted word in file
-vnoremap // y/<C-R>"<CR>
+"search highlighted word in file - extends * and # to work with visual
+vnoremap * y/<C-R>"<CR>
+vnoremap # y?<C-R>"<CR>
 
 "netrw settings
 let g:netrw_liststyle=3
 
 "toggle nerdtree
-map <C-n> :NERDTreeToggle<CR>
+map <leader>n :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "show hidden files in nerdtree
