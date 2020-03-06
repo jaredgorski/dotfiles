@@ -70,9 +70,11 @@
   # docker
   # firefox-developer-edition
   # gifox
+  # google-cloud-sdk (+kubectl)
   # karibiner-elements
   # keybase
   # keyboard-maestro
+  # krew (kubectl plugin manager)
   # magnet
   # postman
   # scm-breeze
