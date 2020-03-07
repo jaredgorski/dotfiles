@@ -66,10 +66,16 @@ while (my $line = <$fh>)
 
     next if ($line =~ m/^#/ || $line !~ m/\S/);
 
-    if ($line =~ m/\[\Q$platform_name\E: BOOTSTRAP BEGIN\]/) {
+    if (
+        $line =~ m/\[\Q$platform_name\E: BOOTSTRAP BEGIN\]/ ||
+        $line =~ m/\[ALL: BOOTSTRAP BEGIN\]/
+    ) {
         $bootstrap_section = 1;
         next;
-    } elsif ($line =~ m/\[\Q$platform_name\E: BOOTSTRAP END\]/) {
+    } elsif (
+        $line =~ m/\[\Q$platform_name\E: BOOTSTRAP END\]/ ||
+        $line =~ m/\[ALL: BOOTSTRAP END\]/
+    ) {
         $bootstrap_section = 0;
         $bootstrap_prefix = '';
         next;

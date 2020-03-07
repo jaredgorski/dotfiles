@@ -84,3 +84,19 @@
   # vim
 
 [MACOS: BOOTSTRAP END]
+
+
+
+# /////////////////////////////
+#   LINUX BOOTSTRAP SECTION
+# /////////////////////////////
+[LINUX: BOOTSTRAP BEGIN]
+[LINUX: BOOTSTRAP END]
+
+
+
+# /////////////////////////////
+#   ALL BOOTSTRAP SECTION
+# /////////////////////////////
+[ALL: BOOTSTRAP BEGIN]
+[ALL: BOOTSTRAP END]
