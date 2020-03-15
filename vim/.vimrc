@@ -115,10 +115,16 @@ Plug 'w0rp/ale'
 
 call plug#end()
 
-"plugin settings
-let g:ale_set_highlights = 0                              "disable ALE highlighting
+"~~~~~~~~~~~~~~~~~~~~~~
+"    plugin settings
+"~~~~~~~~~~~~~~~~~~~~~~
+"dyng/ctrlsf.vim
 let g:ctrlsf_auto_focus = { "at": "start" }               "autofocus ctrlsf results
 let g:ctrlsf_search_mode = 'async'                        "enables async search
+
+"w0rp/ale
+let g:ale_set_highlights = 0                              "disable ALE highlighting
+let g:ale_sign_priority = 11                              "disable ALE highlighting
 
 "~~~~~~~~~~~~~~~~~~~~~~
 "       colors
