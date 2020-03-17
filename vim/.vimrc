@@ -17,6 +17,7 @@ set relativenumber
 set scrolloff=1                             "add 1 line of scroll padding on top and bottom
 set shiftwidth=2 smarttab
 set showcmd
+set signcolumn=yes
 set smartcase
 set softtabstop=2 expandtab
 set tabstop=2
