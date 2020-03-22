@@ -5,7 +5,6 @@ syntax on
 
 "basic settings
 set ai
-set guicursor=                              "disable gui cursor changing
 set ignorecase
 set hlsearch
 set incsearch                               "allow incremental search
@@ -141,3 +140,4 @@ command ColschemeMonoliteMono colorscheme fogbell_lite | syntax off
 "default colorscheme
 ColschemeMono
 
+set t_Co=256
