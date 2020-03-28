@@ -3,9 +3,9 @@
 platform=""
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  platform="linux"
+  platform="LINUX"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  platform="macos"
+  platform="MACOS"
 else
   echo "Valid platform not detected. Aborting."
   exit 1;

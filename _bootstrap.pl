@@ -2,8 +2,16 @@
 
 ######################################################################
 #
-# This script runs any and all uncommented bootstrap tasks defined
-# within the config.df file.
+#   This script runs any and all uncommented bootstrap tasks
+#   defined within the config.df file.
+#
+#
+#   USAGE:
+#
+#     -p, --platform
+#         Specify the platform name to execute. Configured
+#         tasks will only be run if they match the platform
+#         name
 #
 ######################################################################
 
@@ -35,14 +43,11 @@ $platform_name = '';
 # Get program options
 GetOptions('platform=s' => \$platform_name);
 
-if ($platform_name eq "macos") {
-    $platform_name = "MACOS";
-} elsif ($platform_name eq "linux") {
-    $platform_name = "LINUX";
+if ($platform_name) {
+    print "\n    PLATFORM: $platform_name\n\n";
 } else {
-    die "\n    ! No valid platform detected. Aborting.\n\n";
+    die "\n    No platform given. Aborting.\n\n";
 }
-print "\n    PLATFORM: $platform_name\n\n";
 
 $bindir = $FindBin::Bin;
 

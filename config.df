@@ -5,9 +5,9 @@
 
 
 # /////////////////////////////
-#   STOW PATHS SECTION
+#   MACOS STOW PATHS SECTION
 # /////////////////////////////
-[PATHS BEGIN]
+[MACOS: PATHS BEGIN]
 
   alacritty
   bash
@@ -18,7 +18,23 @@
   tmux
   vim
 
-[PATHS END]
+[MACOS: PATHS END]
+
+
+
+# /////////////////////////////
+#   LINUX STOW PATHS SECTION
+# /////////////////////////////
+[LINUX: PATHS BEGIN]
+
+  bash
+  ctags
+  git
+  tmux
+  vim
+  xorg
+
+[LINUX: PATHS END]
 
 
 

@@ -17,6 +17,11 @@
 #         Remove symlinks from target directory based on paths
 #         in config.df.
 #
+#     -p, --platform
+#         Specify the platform name to execute. Configured
+#         tasks will only be run if they match the platform
+#         name
+#
 #     -r, --restow
 #         Remove and re-link symlinks in target directory based 
 #         on paths in config.df. Helpful for pruning stale stow 
@@ -49,6 +54,7 @@ my (
     @config_paths,                  # dirs to symlink
     $delete_flag,                   # flag to denote delete mode
     $restow_flag,                   # flag to denote restow mode
+    $platform_name,                 # name of the platform targeted
 );
 
 # Define bin directory (this directory).
@@ -68,12 +74,19 @@ if (-e $config) {
 }
 
 # Initialize option vars
-$target       = '';
-$delete_flag  = 0;
-$restow_flag  = 0;
+$target         = '';
+$delete_flag    = 0;
+$restow_flag    = 0;
+$platform_name  = '';
 
 # Get program options
-GetOptions('target=s' => \$target, 'delete' => \$delete_flag, 'restow' => \$restow_flag);
+GetOptions('platform=s' => \$platform_name, 'target=s' => \$target, 'delete' => \$delete_flag, 'restow' => \$restow_flag);
+
+if ($platform_name) {
+    print "\n    PLATFORM: $platform_name\n\n";
+} else {
+    die "\n    No platform given. Aborting.\n\n";
+}
 
 # Verify target directory or use $HOME if not provided
 if (-e $target) {
@@ -110,10 +123,16 @@ while (my $line = <$fh>)
 
     next if ($line =~ m/^#/ || $line !~ m/\S/);
 
-    if ($line =~ m/\[PATHS BEGIN\]/) {
+    if (
+        $line =~ m/\[\Q$platform_name\E: PATHS BEGIN\]/ ||
+        $line =~ m/\[ALL: PATHS BEGIN\]/
+    ) {
         $paths_section = 1;
         next;
-    } elsif ($line =~ m/\[PATHS END\]/) {
+    } elsif (
+        $line =~ m/\[\Q$platform_name\E: PATHS END\]/ ||
+        $line =~ m/\[ALL: PATHS END\]/
+    ) {
         $paths_section = 0;
         next;
     };
