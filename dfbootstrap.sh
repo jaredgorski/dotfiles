@@ -18,7 +18,7 @@ command -v perl >/dev/null || {
 
 if [[ -n "$platform" ]]
 then
-  perl _bootstrap.pl -p $platform
+  perl dfbootstrap.pl -p $platform
 else
   echo "Valid platform not detected. Aborting."
 fi

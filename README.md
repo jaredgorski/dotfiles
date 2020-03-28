@@ -23,7 +23,7 @@ This system also includes a bootstrapping script which aids in setting up a bare
 ```console
 $ ./dfbootstrap.sh
 
-$ ./_bootstrap.pl -p PLATFORM
+$ ./dfbootstrap.pl -p PLATFORM
 ```
 
 #### Stow:
