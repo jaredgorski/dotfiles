@@ -22,17 +22,19 @@ This system also includes a bootstrapping script which aids in setting up a bare
 #### Bootstrap:
 ```console
 $ ./dfbootstrap.sh
+
+$ ./_bootstrap.pl -p PLATFORM
 ```
 
 #### Stow:
 ```console
-$ ./dfstow.pl
+$ ./dfstow.pl -p PLATFORM
 
-$ ./dfstow.pl -t /absolute/path/to/target/dir
+$ ./dfstow.pl -p PLATFORM -t /absolute/path/to/target/dir
 
-$ ./dfstow.pl -d
+$ ./dfstow.pl -p PLATFORM -d
 
-$ ./dfstow.pl -r
+$ ./dfstow.pl -p PLATFORM -r
 ```
 
 ### "Root" directories
@@ -43,15 +45,15 @@ Dotfiles should be stored in "root" directories which contain the entire file st
 ### config.df
 Fill `config.df` with a newline-delimited list of directories containing the files/directories which should be symlinked into the target directory. These entries should simply be the names of the directories and should not begin with an initial `/`. List should be prepended and appended with `[PATHS BEGIN]` and `[PATHS END]`, respectively. Beginning a line with a hash symbol (`#`) will comment that line and exclude it from processing by `dfstow.pl`.
 
-E.g.:
+Example `config.df` paths declaration for `MY_CUSTOM_PLATFORM_NAME`:
 ```
-[PATHS BEGIN]
+[MY_CUSTOM_PLATFORM_NAME: PATHS BEGIN]
 dir1
 dir2
 dir3
 # this line is commented and will be ignored
   # this line is also commented
-[PATHS END]
+[MY_CUSTOM_PLATFORM_NAME: PATHS END]
 ```
 
 All files and directories in `dir1`, `dir2`, and `dir3` will be symlinked into the target directory. If `dir1` contains a file `file1.txt`, it will be linked as `$HOME/file1.txt`. Likewise, if `dir1` contains a directory `nested1`, it will be linked as `$HOME/nested1/`. This works identically to GNU stow.
