@@ -14,8 +14,9 @@
   zsh
   ctags
   emacs
-  git
-  tmux
+  git_all
+  git_macos
+  tmux_macos
   vim
 
 [MACOS: PATHS END]
@@ -23,18 +24,19 @@
 
 
 # /////////////////////////////
-#   LINUX STOW PATHS SECTION
+#   DEBIAN STOW PATHS SECTION
 # /////////////////////////////
-[LINUX: PATHS BEGIN]
+[DEBIAN: PATHS BEGIN]
 
   bash
   ctags
-  git
-  tmux
+  git_all
+  git_deb
+  tmux_deb
   vim
   xorg
 
-[LINUX: PATHS END]
+[DEBIAN: PATHS END]
 
 
 
@@ -104,10 +106,10 @@
 
 
 # /////////////////////////////
-#   LINUX BOOTSTRAP SECTION
+#   DEBIAN BOOTSTRAP SECTION
 # /////////////////////////////
-[LINUX: BOOTSTRAP BEGIN]
-[LINUX: BOOTSTRAP END]
+[DEBIAN: BOOTSTRAP BEGIN]
+[DEBIAN: BOOTSTRAP END]
 
 
 

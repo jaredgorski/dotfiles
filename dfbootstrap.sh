@@ -3,7 +3,7 @@
 platform=""
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  platform="LINUX"
+  platform="DEBIAN"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   platform="MACOS"
 else
@@ -21,4 +21,7 @@ then
   perl dfbootstrap.pl -p $platform
 else
   echo "Valid platform not detected. Aborting."
+  exit 1;
 fi
+
+exit 0;
