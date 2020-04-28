@@ -4,6 +4,7 @@
 syntax on
 
 "basic settings
+set nocompatible
 set ai
 set ignorecase
 set hlsearch
@@ -111,6 +112,7 @@ Plug 'sgur/vim-editorconfig'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sleuth'
+Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
 
 call plug#end()
