@@ -11,10 +11,32 @@
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
 
+;; Ctags
+(setq path-to-ctags "/usr/local/bin/ctags")
+
+;; Large files
+(setq large-file-warning-threshold nil)
+
 ;; Projectile
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(setq projectile-switch-project-action 'helm-projectile)
+
+;; Helm
+(require 'helm)
+(require 'helm-config)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-c C-f") 'helm-find)
+(global-set-key (kbd "C-c C-p") 'helm-projectile)
+(helm-mode 1)
+(setq helm-mode-fuzzy-match t)
+(setq helm-completion-in-region-fuzzy-match t)
 
 ;; Backup files 
 (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
@@ -34,16 +56,6 @@
 
 ;; Evil Commentary
 (evil-commentary-mode)
-
-;; Helm
-(require 'helm)
-(require 'helm-config)
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-c C-f") 'helm-find)
-(global-set-key (kbd "C-c C-p") 'helm-find-files)
-(helm-mode 1)
 
 ;; Shell
 (setq explicit-shell-file-name "/usr/local/bin/zsh")
@@ -68,7 +80,7 @@
  '(helm-completion-style (quote emacs))
  '(package-selected-packages
    (quote
-    (nothing-theme evil-commentary package-lint evil helm projectile))))
+    (helm-rg nothing-theme evil-commentary package-lint evil helm projectile))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
