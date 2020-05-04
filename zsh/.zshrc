@@ -63,6 +63,13 @@ bindkey -M vicmd "^V" edit-command-line
 export KEYTIMEOUT=1
 
 # ----------------------
+# Functions
+# ----------------------
+zet () {
+  vim -c "Zet $1"
+}
+
+# ----------------------
 # Git aliases
 # ----------------------
 

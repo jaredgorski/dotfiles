@@ -9,7 +9,8 @@ set ai
 set ignorecase
 set hlsearch
 set incsearch                               "allow incremental search
-set nobackup
+set backupdir=~/.vim/backup
+set directory=~/.vim/swap
 set noeb vb t_vb=                           "disable errorbells and visualbell
 set nofixendofline
 set number
@@ -22,7 +23,11 @@ set smartcase
 set softtabstop=2 expandtab
 set tabstop=2
 set foldmethod=manual                       "code folding
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip    "wildignore path
+if has("wildmenu")
+  set wildmenu
+  set wildmode=longest:full,full
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip  "wildignore path
+endif
 
 filetype plugin indent on                   "filetype settings
 
@@ -126,6 +131,21 @@ let g:ctrlsf_search_mode = 'async'                        "enables async search
 
 "w0rp/ale
 let g:ale_set_highlights = 0                              "disable ALE highlighting
+
+"~~~~~~~~~~~~~~~~~~~~~~
+"    vimwiki settings
+"~~~~~~~~~~~~~~~~~~~~~~
+autocmd FileType vimwiki set autochdir                    "enable direct filename autocompletion within vimwiki directory
+
+" Notes search
+command! -bang -nargs=* WikiRg call fzf#vim#grep('rg 
+      \ --column --line-number --no-heading --color=never 
+      \ --smart-case --type md <q-args> "/Users/jaredgorski/vimwiki"',
+      \ 1, fzf#vim#with_preview(), <bang>0)
+autocmd FileType vimwiki nnoremap <buffer> <leader>wf :WikiRg<Space>
+
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 "~~~~~~~~~~~~~~~~~~~~~~
 "       colors
