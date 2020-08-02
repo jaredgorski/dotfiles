@@ -8,6 +8,8 @@ This is a rather simple dotfiles system consisting of a small Perl script which 
 
 This system also includes a bootstrapping script which aids in setting up a bare machine.
 
+To review: The **"bootstrap"** stuff is for setting up a bare machine and the **"stow"**/**"dotfiles"** stuff is for maintaining dotfiles/configuration files/various files I always want around. This repository covers both of these use-cases.
+
 ### Prerequisites
 - UNIX-like system
 - Perl v5.6.0+
