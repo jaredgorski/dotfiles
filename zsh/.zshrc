@@ -82,9 +82,13 @@ alias gst='git stash'
 # Other Aliases
 # ----------------------
 
-# python3 to python
+# python setyp
 # alias python='python3'
 # alias pip='pip3'
+  # init pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 
 # kubectl ctx to kubectx
 alias kubectx='kubectl ctx'
@@ -94,6 +98,7 @@ alias cl='clear'
 
 # use vim always
 alias vi='vim'
+
 
 # ----------------------
 # Environment variables
