@@ -92,6 +92,9 @@ alias kubectx='kubectl ctx'
 # clear screen shortcut
 alias cl='clear'
 
+# use vim always
+alias vi='vim'
+
 # ----------------------
 # Environment variables
 # (and installations)
