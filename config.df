@@ -66,7 +66,7 @@
     nasm
     osslsigncode
     perl
-    python
+    pyenv
     qemu
     ripgrep
     telepresence
@@ -76,6 +76,10 @@
     wget
     zsh
 
+  # set up python with pyenv
+  BOOTSTRAP_PREFIX: pyenv
+    install 3.8.5
+    global 3.8.5
 
 # remaining utilities list
   # 1password
