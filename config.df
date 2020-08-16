@@ -18,6 +18,7 @@
   git_macos
   tmux_macos
   vim
+  vimwiki-utilities
 
 [MACOS: PATHS END]
 
