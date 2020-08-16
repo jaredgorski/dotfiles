@@ -69,6 +69,8 @@ zet () {
   vim -c "Zet $1"
 }
 
+alias zetbl='~/vimwiki-utilities/backlinks.pl'
+
 # ----------------------
 # Git aliases
 # ----------------------
