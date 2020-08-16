@@ -49,7 +49,7 @@ foreach $curr_file (@vimwiki_zett_files) {
       $backlink_title =~ s/^zett-//;
       $backlink_title =~ s/-\d\d\d\d-\d\d-\d\d-\d\d\d\d\.md//;
 
-      $backlinks_str = "$backlinks_str\t- [$backlink_title]($backlink_basename)\n";
+      $backlinks_str = "$backlinks_str- [$backlink_title]($backlink_basename)\n";
     }
 
     open my $in, '<', $curr_file or die "Can't read current file: $!";
@@ -63,7 +63,7 @@ foreach $curr_file (@vimwiki_zett_files) {
       } elsif ($_ eq "backlinks:\n") {
         $in_old_backlinks = 1;
         next;
-      } elsif ($in_old_backlinks && $_ =~ m/^\t-/) {
+      } elsif ($in_old_backlinks && $_ =~ m/^- \[/) {
         next;
       } elsif ($_ eq "---\n") {
         $new_filedata = "$new_filedata$backlinks_str$_";
