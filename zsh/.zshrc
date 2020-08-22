@@ -84,14 +84,6 @@ alias gst='git stash'
 # Other Aliases
 # ----------------------
 
-# python setyp
-# alias python='python3'
-# alias pip='pip3'
-  # init pyenv
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
 # kubectl ctx to kubectx
 alias kubectx='kubectl ctx'
 
@@ -101,6 +93,14 @@ alias cl='clear'
 # use vim always
 alias vi='vim'
 
+# ----------------------
+# Extra
+# ----------------------
+
+# Enable ESC-v to edit command line
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd C-v edit-command-line
 
 # ----------------------
 # Environment variables
@@ -130,8 +130,14 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Hom
 # scm breeze
 [ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
 
-# python3
-export PATH="$PATH:$HOME/Library/Python/3.7/bin"
+# Python
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+alias python=python3
+alias pip=pip3
+
 
 # Google Cloud SDK
 # The next line updates PATH for the Google Cloud SDK.
@@ -142,7 +148,7 @@ if [ -f '/Users/jaredgorski/google-cloud-sdk/completion.zsh.inc' ]; then . '/Use
 # krew (kubectl plugin manager)
 export PATH="${PATH}:${HOME}/.krew/bin"
 
-# NVM
+# Node
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

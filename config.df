@@ -10,6 +10,7 @@
 [MACOS: PATHS BEGIN]
 
   alacritty
+  arpx
   bash
   zsh
   ctags
@@ -89,17 +90,21 @@
   # balena-etcher
   # bartender3
   # bear
-  # cylance
+  # cybereason
   # docker
   # firefox-developer-edition
   # gifox
+  # go
   # google-cloud-sdk (+ kubectl)
   # karibiner-elements
   # keybase
   # keyboard-maestro
   # krew (kubectl plugin manager: + ctx)
   # magnet
+  # nvm
   # postman
+  # rust
+  # rvm
   # scm-breeze
   # skype
   # slack

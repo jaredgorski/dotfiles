@@ -1,0 +1,59 @@
+processes:
+  - name: api
+    # command: telepresence --swap-deployment api --local-cluster --logfile /dev/null --run npm run dev
+    command: telepresence --method inject-tcp --swap-deployment api --local-cluster --logfile /dev/null --run npm run dev
+    cwd: /Users/jaredgorski/Projects/LiferayCloud/api/api
+    onfail: api
+  - name: console
+    # command: telepresence --swap-deployment console --local-cluster --logfile /dev/null --run npm run dev
+    command: telepresence --method inject-tcp --swap-deployment console --local-cluster --logfile /dev/null --run npm run dev
+    cwd: /Users/jaredgorski/Projects/LiferayCloud/console
+    onfail: console
+  - name: admin-client
+    # command: telepresence --swap-deployment admin-client --local-cluster --logfile /dev/null --run yarn dev
+    command: telepresence --method inject-tcp --swap-deployment admin-client --local-cluster --logfile /dev/null --run yarn dev
+    cwd: /Users/jaredgorski/Projects/LiferayCloud/admin-client
+  - name: admin-server
+    # command: telepresence --swap-deployment admin-server --local-cluster --logfile /dev/null --run yarn dev
+    command: telepresence --method inject-tcp --swap-deployment admin-server --local-cluster --logfile /dev/null --run yarn dev
+    cwd: /Users/jaredgorski/Projects/LiferayCloud/admin-server
+
+monitors:
+  - process: console
+    condition: '[[ "$LOG_LINE" =~ "autoprefixer" ]]'
+    actions:
+      - silence
+  - process: api
+    condition: '[[ "$LOG_LINE" =~ "Port undefined" ]]'
+    actions:
+      - api
+  - process: console
+    condition: '[[ "$LOG_LINE" =~ "Port undefined" ]]'
+    actions:
+      - console
+
+actions:
+  - name: api
+    command: |
+      echo "Respawning API."
+      pid=$(lsof -ti :3002)
+      [[ ! -z "$pid" ]] && kill $pid
+      for i in {1..5}
+      do
+        let n=6-$i
+        echo $n
+        sleep 1
+      done
+    onsucceed: respawn
+  - name: console
+    command: |
+      echo "Respawning Console."
+      pid=$(lsof -ti :3001)
+      [[ ! -z "$pid" ]] && kill $pid
+      for i in {1..5}
+      do
+        let n=6-$i
+        echo $n
+        sleep 1
+      done
+    onsucceed: respawn
