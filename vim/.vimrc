@@ -12,7 +12,6 @@ set incsearch                               "allow incremental search
 set backupdir=~/.vim/backup
 set directory=~/.vim/swap
 set noeb vb t_vb=                           "disable errorbells and visualbell
-set nofixendofline
 set number
 set relativenumber
 set scrolloff=1                             "add 1 line of scroll padding on top and bottom
@@ -30,6 +29,8 @@ if has("wildmenu")
 endif
 
 filetype plugin indent on                   "filetype settings
+
+set tags=./.tags,.tags;                     "ctags search path
 
 "~~~~~~~~~~~~~~~~~~~~~~
 "     status line
@@ -52,37 +53,16 @@ set statusline+=\
 set statusline+=%l:%c
 set statusline+=\ 
 
-"ctags search path
-set tags=./.tags,.tags;
-
 "~~~~~~~~~~~~~~~~~~~~~~
 "        netrw
 "~~~~~~~~~~~~~~~~~~~~~~
 let g:netrw_liststyle=1
-
-"netrw toggle function
-function ToggleNetrw()
-  if &filetype == 'netrw'
-    if expand('#:t') != ''
-      execute "bprevious"
-    else
-      execute "Rexplore"
-    endif
-  elseif expand('%:t') != ''
-    execute "Explore %:h"
-  else
-    execute "Explore"
-  endif
-endfunction
 
 "~~~~~~~~~~~~~~~~~~~~~~
 "       mappings
 "~~~~~~~~~~~~~~~~~~~~~~
 "map leader to space
 map <Space> <leader>
-
-"netrw easy toggle
-map <leader>n :call ToggleNetrw()<CR>
 
 "ctrlsf search
 nnoremap <leader>f :CtrlSF 
@@ -107,7 +87,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'cespare/vim-toml'
 Plug 'dyng/ctrlsf.vim'
 Plug 'jaredgorski/fogbell.vim'
-Plug 'jaredgorski/spacecamp'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
@@ -150,16 +129,6 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
 "~~~~~~~~~~~~~~~~~~~~~~
 "       colors
 "~~~~~~~~~~~~~~~~~~~~~~
-"colorscheme commands
-command ColschemeDark syntax on | colorscheme spacecamp
-command ColschemeLight syntax on | colorscheme fogbell_light
-command ColschemeMed syntax on | colorscheme spacecamp_lite
-command ColschemeMono syntax on | colorscheme fogbell
-command ColschemeMonoMono colorscheme fogbell | syntax off
-command ColschemeMonolite syntax on | colorscheme fogbell_lite
-command ColschemeMonoliteMono colorscheme fogbell_lite | syntax off
-
-"default colorscheme
-ColschemeMono
-
+syntax on
+colorscheme fogbell
 set t_Co=256
