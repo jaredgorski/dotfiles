@@ -11,12 +11,14 @@
 
   alacritty
   arpx
-  bash
+  # bash
   zsh
-  ctags
-  emacs
+  # ctags
+  # emacs
   git_all
   git_macos
+  nvm
+  oh-my-zsh
   tmux_macos
   vim
   vimwiki-utilities
@@ -63,12 +65,12 @@
     cpanminus
     htop
     httpie
-    kubectx
     makensis
     nasm
     osslsigncode
     perl
     pyenv
+    pyenv-virtualenv
     qemu
     ripgrep
     telepresence
@@ -76,7 +78,6 @@
     --HEAD universal-ctags/universal-ctags/universal-ctags
     webp
     wget
-    zsh
 
   # set up python with pyenv
   BOOTSTRAP_PREFIX: pyenv
@@ -86,19 +87,11 @@
 # remaining utilities list
   # 1password
   # alacritty
-  # alfred3
-  # balena-etcher
-  # bartender3
-  # bear
   # cybereason
   # docker
-  # firefox-developer-edition
   # gifox
   # go
   # google-cloud-sdk (+ kubectl)
-  # karibiner-elements
-  # keybase
-  # keyboard-maestro
   # krew (kubectl plugin manager: + ctx)
   # magnet
   # nvm
@@ -106,9 +99,7 @@
   # rust
   # rvm
   # scm-breeze
-  # skype
   # slack
-  # spotify
   # vim
 
 [MACOS: BOOTSTRAP END]

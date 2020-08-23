@@ -14,17 +14,8 @@ export DOTFILES=$HOME/Projects/Personal/dotfiles
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Load zplugin
-source '/Users/jaredgorski/.zplugin/bin/zplugin.zsh'
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
-
-# trapd00r/LS_COLORS (better ls colors)
-zplugin ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh"
-zplugin load trapd00r/LS_COLORS
-
 # oh-my-zsh prompt theme
-ZSH_THEME="dollar"
+ZSH_THEME="jaredgorski"
 
 # oh-my-zsh plugins
 plugins=(git)
@@ -97,7 +88,7 @@ alias vi='vim'
 # Extra
 # ----------------------
 
-# Enable ESC-v to edit command line
+# Enable C-v (in Normal command line mode) to edit command line
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd C-v edit-command-line
@@ -152,9 +143,3 @@ export PATH="${PATH}:${HOME}/.krew/bin"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-# Adding autocomplete for 'lcp'
-[ -f ~/.lcp_autocomplete ] && source ~/.lcp_autocomplete
