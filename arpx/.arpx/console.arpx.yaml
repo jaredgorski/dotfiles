@@ -1,0 +1,15 @@
+processes:
+  - name: fwd
+    command: npm run fwd api redis
+    cwd: /Users/jaredgorski/Projects/Liferay/lfr-dev-workaround
+    onfail: respawn
+  - name: console
+    command: npm run dev
+    cwd: /Users/jaredgorski/Projects/Liferay/console
+    onfail: respawn
+
+monitors:
+  - process: console
+    condition: '[[ "$LOG_LINE" =~ "autoprefixer" ]]'
+    actions:
+      - silence
