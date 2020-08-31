@@ -1,0 +1,12 @@
+colorscheme elflord		" for search hl mainly
+set ai
+set backupdir=~/.vim/backup
+set directory=~/.vim/swap
+set hlsearch
+set ignorecase
+set incsearch
+set noeb vb t_vb=		" no visual bell
+set number
+set relativenumber
+set smartcase
+syntax off			" always.
