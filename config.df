@@ -14,7 +14,7 @@
   # bash
   zsh
   # ctags
-  # emacs
+  emacs
   git_all
   git_macos
   nvm
