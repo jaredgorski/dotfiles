@@ -78,9 +78,6 @@ alias gst='git stash'
 # kubectl ctx to kubectx
 alias kubectx='kubectl ctx'
 
-# clear screen shortcut
-alias cl='clear'
-
 # use vim always
 alias vi='vim'
 
