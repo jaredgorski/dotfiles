@@ -13,7 +13,6 @@
   arpx
   # bash
   zsh
-  # ctags
   emacs
   git_all
   git_macos
@@ -33,7 +32,6 @@
 [DEBIAN: PATHS BEGIN]
 
   bash
-  ctags
   git_all
   git_deb
   tmux_deb
@@ -75,7 +73,6 @@
     ripgrep
     telepresence
     tmux
-    --HEAD universal-ctags/universal-ctags/universal-ctags
     webp
     wget
 

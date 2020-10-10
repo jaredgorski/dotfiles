@@ -83,6 +83,7 @@ map <leader>p :FZF<CR>
 "plugs
 call plug#begin('~/.vim/plugged')
 
+Plug 'pechorin/any-jump.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'cespare/vim-toml'
 Plug 'dyng/ctrlsf.vim'
