@@ -19,7 +19,7 @@ $homedir = File::HomeDir->my_home;
 $vimwikidir = "$homedir/vimwiki";
 
 sub get_backlinks {
-  my $filename = $_[0];
+  my $filename = quotemeta($_[0]);
   my $link_search = "\\[((?!bl_)).*\\]\\($filename";
 
   my @output = `rg '$link_search' $vimwikidir/zett-* -l --pcre2`;
@@ -58,11 +58,11 @@ foreach $curr_file (@vimwiki_zett_files) {
 
   open my $in, '<', $curr_file or die "Can't read current file: $!";
   my $new_filedata = "";
-  my $match_occurances = 0;
+  my $match_occurences = 0;
   my $in_old_backlinks = 0;
   while (<$in>) {
-    if ($_ eq "---\n" && !$match_occurances) {
-      $match_occurances++;
+    if ($_ eq "---\n" && !$match_occurences) {
+      $match_occurences++;
       $new_filedata = "$new_filedata$_";
     } elsif ($_ eq "backlinks:\n") {
       $in_old_backlinks = 1;
