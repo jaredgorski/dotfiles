@@ -62,6 +62,11 @@ zet () {
 
 alias zetbl='~/vimwiki-utilities/backlinks.pl'
 
+function httpless {
+  # `httpless example.org'
+  http --pretty=all --print=hb "$@" | less -R;
+}
+
 # ----------------------
 # Git aliases
 # ----------------------
