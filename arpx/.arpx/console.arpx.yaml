@@ -1,11 +1,11 @@
 processes:
-  - name: fwd
-    command: npm run fwd api redis
-    cwd: /Users/jaredgorski/Projects/Liferay/lfr-dev-workaround
-    onfail: respawn
   - name: console
-    command: npm run dev
+    command: npm run dev:sans-telepresence
     cwd: /Users/jaredgorski/Projects/Liferay/console
+    onfail: respawn
+  - name: liferay-console
+    command: yarn dev
+    cwd: /Users/jaredgorski/Projects/Liferay/liferay-console
     onfail: respawn
 
 monitors:
