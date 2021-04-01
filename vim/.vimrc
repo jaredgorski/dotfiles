@@ -112,10 +112,25 @@ let g:ctrlsf_search_mode = 'async'                        "enables async search
 "w0rp/ale
 let g:ale_set_highlights = 0                              "disable ALE highlighting
 
+let g:ale_linters = {
+\ 'asm': [],
+\}
+
 "~~~~~~~~~~~~~~~~~~~~~~
 "    vimwiki settings
 "~~~~~~~~~~~~~~~~~~~~~~
 autocmd FileType vimwiki set autochdir                    "enable direct filename autocompletion within vimwiki directory
+
+" Load new notes with frontmatter
+func! LoadFrontmatter()
+  " build frontmatter
+  let $Frontmatter = "---\ntitle: " . expand('%:t:r')  . "\ndate: " . strftime("%Y-%m-%d") . "\nkeywords: \nreferences: \n---\n"
+
+  " echo frontmatter into file
+  0r !echo $Frontmatter
+endfunc
+
+autocmd BufNewFile ~/vimwiki/*.md silent! call LoadFrontmatter()
 
 " Notes search
 command! -bang -nargs=* WikiRg call fzf#vim#grep('rg 

@@ -13,3 +13,5 @@
 	ui = true
 [http]
 	postBuffer = 1048576000
+[pull]
+	rebase = false

@@ -56,15 +56,18 @@ export KEYTIMEOUT=1
 # ----------------------
 # Functions
 # ----------------------
-zet () {
-  vim -c "Zet $1"
+note () {
+  vim -c "e ~/vimwiki/$1.md"
 }
-
-alias zetbl='~/vimwiki-utilities/backlinks.pl'
 
 function httpless {
   # `httpless example.org'
   http --pretty=all --print=hb "$@" | less -R;
+}
+
+function follow-api-logs {
+  kubectl config use-context docker-desktop;
+  kubectl get pods -l=service=api | grep api | cut -d ' ' -f 1 | awk '{print $1}' | xargs -I {} kubectl logs {} api --follow;
 }
 
 # ----------------------
@@ -103,13 +106,6 @@ bindkey -M vicmd C-v edit-command-line
 # FZF
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Golang
-export GOPATH=$HOME/projects/Go_Workspace
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
-export PATH=${PATH}:${GOPATH//://bin:}/bin
 
 # Rust
 export PATH=$PATH:$HOME/.cargo/bin

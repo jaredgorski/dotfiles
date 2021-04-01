@@ -1,15 +1,49 @@
+entrypoint: console
+
 processes:
   - name: console
+    color: blue
     command: npm run dev:sans-telepresence
     cwd: /Users/jaredgorski/Projects/Liferay/console
-    onfail: respawn
-  - name: liferay-console
-    command: yarn dev
-    cwd: /Users/jaredgorski/Projects/Liferay/liferay-console
-    onfail: respawn
+    onfail: notifyFailure
 
 monitors:
   - process: console
     condition: '[[ "$LOG_LINE" =~ "autoprefixer" ]]'
     actions:
       - silence
+
+  - process: console
+    condition: '[[ "$LOG_LINE" =~ "info Found a change, restarting the server" ]]'
+    actions:
+      - notifyBuilding
+
+  - process: console
+    condition: '[[ "$LOG_LINE" =~ "info Ready on http://0.0.0.0:3001" ]]'
+    actions:
+      - notifyReady
+
+  - process: console
+    condition: '[[ "$LOG_LINE" =~ "Exit status 1" ]]'
+    actions:
+      - notifyFailure
+      - sleepAndSpawnConsole
+
+actions:
+  - name: notifyBuilding
+    command: |
+      osascript -e 'display notification "Development Console is building..." with title "arpx"'
+
+  - name: notifyReady
+    command: |
+      osascript -e 'display notification "Development Console is ready." with title "arpx" sound name "Ping"'
+
+  - name: notifyFailure
+    command: |
+      osascript -e 'display notification "Development Console encountered failure." with title "arpx" sound name "Funk"'
+
+  - name: sleepAndSpawnConsole
+    command: |
+      echo "Spawning Console in 3 seconds..."
+      sleep 3
+    onsucceed: process:console
