@@ -88,6 +88,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'cespare/vim-toml'
 Plug 'dyng/ctrlsf.vim'
 Plug 'jaredgorski/fogbell.vim'
+Plug 'jaredgorski/Mies.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
@@ -119,32 +120,37 @@ let g:ale_linters = {
 "~~~~~~~~~~~~~~~~~~~~~~
 "    vimwiki settings
 "~~~~~~~~~~~~~~~~~~~~~~
-autocmd FileType vimwiki set autochdir                    "enable direct filename autocompletion within vimwiki directory
+autocmd FileType vimwiki set autochdir                    "enable direct filename autocompletion within CWD for vimwiki filetype
 
-" Load new notes with frontmatter
+" Load new vimwiki files with frontmatter
 func! LoadFrontmatter()
   " build frontmatter
-  let $Frontmatter = "---\ntitle: " . expand('%:t:r')  . "\ndate: " . strftime("%Y-%m-%d") . "\nkeywords: \nreferences: \n---\n"
+  let $Frontmatter = "---\ntitle: " . expand('%:t:r')  . "\ndate: " . strftime("%Y-%m-%d") . "\npublic: false\n---\n"
 
   " echo frontmatter into file
   0r !echo $Frontmatter
 endfunc
 
-autocmd BufNewFile ~/vimwiki/*.md silent! call LoadFrontmatter()
+let g:vimwiki_list = [
+      \{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'},
+      \{'path': '~/Documents/Notes/', 'syntax': 'markdown', 'ext': '.md'},
+      \{'path': '~/Documents/Writing/', 'syntax': 'markdown', 'ext': '.md'}]
 
-" Notes search
+for w in g:vimwiki_list
+  execute 'autocmd BufNewFile ' . w['path'] . '*.md silent! call LoadFrontmatter()'
+endfor
+
+" Current vimwiki rg search
 command! -bang -nargs=* WikiRg call fzf#vim#grep('rg 
       \ --column --line-number --no-heading --color=never 
-      \ --smart-case --type md <q-args> "/Users/jaredgorski/vimwiki"',
+      \ --smart-case --type md <q-args> ' . getcwd(),
       \ 1, fzf#vim#with_preview(), <bang>0)
 autocmd FileType vimwiki nnoremap <buffer> <leader>wf :WikiRg<Space>
-
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 "~~~~~~~~~~~~~~~~~~~~~~
 "       colors
 "~~~~~~~~~~~~~~~~~~~~~~
 syntax on
-colorscheme fogbell
+colorscheme mies
+set background=dark
 set t_Co=256
